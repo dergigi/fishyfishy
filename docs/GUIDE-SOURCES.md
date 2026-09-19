@@ -11,10 +11,16 @@ Checked 2026-09-19. This is a small curated educational guide, not an exhaustive
 - Long-spined sea urchin: [Rodríguez et al., 2013, Zootaxa](https://www.mapress.com/zootaxa/2013/f/z03636p170f.pdf). This eastern Atlantic species is *Diadema africanum*, not the Caribbean *D. antillarum*.
 - Purple sea star: [DORIS](https://doris.ffessm.fr/Especes/Ophidiaster-ophidianus-Etoile-de-mer-violette-670).
 
+- Young Mediterranean damselfish and adult comparison: [DORIS](https://doris.ffessm.fr/Especes/Chromis-chromis-Castagnole-739), [MadeiraFish catalog](https://oomdata.arditi.pt/products/MadeiraFish/index.php?id=129&page=viewfish). Included as a lookalike, not a confirmed identification of the reported blue-striped fish. Compare with Canary damselfish and Azores chromis; a description alone is insufficient.
+- Azores chromis: [University of Évora biodiversity museum](https://museubiodiversidade.uevora.pt/elenco-de-especies/biodiversidade-actual/animais/cordados/peixes/chromis-limbata/).
+- Bogue: [DORIS](https://doris.ffessm.fr/Especes/Boops-boops-Bogue-2701).
+- Sand smelt: [DORIS](https://doris.ffessm.fr/Especes/Atherina-presbyter-Pretre-423).
+- European sardine: [DORIS](https://doris.ffessm.fr/Especes/Sardina-pilchardus-Sardine-d-Europe-3095), [MadeiraFish catalog](https://oomdata.arditi.pt/products/MadeiraFish/index.php?id=56&page=viewfish).
+
 ## Photos
 
 All reference photos are bundled for offline use. These are real species photographs, not necessarily photographed in Madeira. Different sexes, ages, lighting and habitats can change appearance. Photos are not a complete identification key.
 
-The exact file, author, original source URL, licence and changes for each photo are recorded in [`photo-credits.json`](../app/src/main/assets/photo-credits.json) and exposed from the creature detail screen. Photographs retain their individual CC BY-SA licences; they are not covered by the app's MIT licence. Display crops and resized versions remain under the original photo's licence. Source files are available through the attributed Commons pages.
+The exact file, author, original source URL, licence and changes for each photo are recorded in [`photo-credits.json`](../app/src/main/assets/photo-credits.json) and exposed from the creature detail screen. Photographs retain their individual CC BY / CC BY-SA licences; they are not covered by the app's MIT licence. Display crops and resized versions remain under the original photo's licence. Source files are available through the attributed Commons pages.
 
 `scripts/fetch-guide-images.py` documents retrieval. Review image selection and attribution before replacing assets; Commons search results may change.

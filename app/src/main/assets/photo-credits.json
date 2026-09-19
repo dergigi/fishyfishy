@@ -1,5 +1,25 @@
 [
   {
+    "id": "azores_chromis",
+    "file": "Fula blanca (Chromis limbata), franja marina Teno-Rasca, Tenerife, España, 2022-01-09, DD 13.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fula_blanca_(Chromis_limbata),_franja_marina_Teno-Rasca,_Tenerife,_Espa%C3%B1a,_2022-01-09,_DD_13.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Fula_blanca_%28Chromis_limbata%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-09%2C_DD_13.jpg/1280px-Fula_blanca_%28Chromis_limbata%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-09%2C_DD_13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "bogue",
+    "file": "Banco de bogas (Boops boops), franja marina Teno-Rasca, Tenerife, España, 2022-01-08, DD 43.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Banco_de_bogas_(Boops_boops),_franja_marina_Teno-Rasca,_Tenerife,_Espa%C3%B1a,_2022-01-08,_DD_43.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Banco_de_bogas_%28Boops_boops%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-08%2C_DD_43.jpg/1280px-Banco_de_bogas_%28Boops_boops%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-08%2C_DD_43.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
     "id": "bream",
     "file": "Sargo_común_(Diplodus_sargus),_Madeira,_Portugal,_2019-05-31,_DD_29.jpg",
     "author": "Diego Delso",
@@ -7,6 +27,26 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Sargo_com%C3%BAn_(Diplodus_sargus),_Madeira,_Portugal,_2019-05-31,_DD_29.jpg",
     "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Sargo_com%C3%BAn_%28Diplodus_sargus%29%2C_Madeira%2C_Portugal%2C_2019-05-31%2C_DD_29.jpg/1280px-Sargo_com%C3%BAn_%28Diplodus_sargus%29%2C_Madeira%2C_Portugal%2C_2019-05-31%2C_DD_29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "chromis",
+    "file": "Chromis chromis (Linnaeus, 1758) - juvénile.jpg",
+    "author": "Parent Géry",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chromis_chromis_(Linnaeus,_1758)_-_juv%C3%A9nile.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Chromis_chromis_%28Linnaeus%2C_1758%29_-_juv%C3%A9nile.jpg/1280px-Chromis_chromis_%28Linnaeus%2C_1758%29_-_juv%C3%A9nile.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "chromis_adult",
+    "file": "Chromis chromis.jpg",
+    "author": "Anders Finn Jørgensen from Copenhagen, Denmark",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chromis_chromis.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Chromis_chromis.jpg/1280px-Chromis_chromis.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {
@@ -37,6 +77,16 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Fula_negra_(Abudefduf_luridus),_franja_marina_Teno-Rasca,_Tenerife,_Espa%C3%B1a,_2022-01-09,_DD_37-38_FS.jpg",
     "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Fula_negra_%28Abudefduf_luridus%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-09%2C_DD_37-38_FS.jpg/1280px-Fula_negra_%28Abudefduf_luridus%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-09%2C_DD_37-38_FS.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "damselfish_blue",
+    "file": "Similiparma lurida.png",
+    "author": "Sebastian Rodriguez Alfaro",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Similiparma_lurida.png",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Similiparma_lurida.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {
@@ -77,6 +127,26 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Salema_(Sarpa_salpa),_Catania,_Sicilia,_Italia,_2025-04-04,_DD_90.jpg",
     "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Salema_%28Sarpa_salpa%29%2C_Catania%2C_Sicilia%2C_Italia%2C_2025-04-04%2C_DD_90.jpg/1280px-Salema_%28Sarpa_salpa%29%2C_Catania%2C_Sicilia%2C_Italia%2C_2025-04-04%2C_DD_90.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "sand_smelt",
+    "file": "Atherina presbyter.jpg",
+    "author": "\n\n\n\n\n\nThis illustration was made by Citron\nYou must credit this : Citron / CC-BY-SA-3.0\n\n",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Atherina_presbyter.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/81/Atherina_presbyter.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "sardine",
+    "file": "Sardina pilchardus 2011.jpg",
+    "author": "\n\n\n\n\n\nThis illustration was made by Citron\nYou must credit this : Citron / CC-BY-SA-3.0\n\n",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Sardina_pilchardus_2011.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Sardina_pilchardus_2011.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {

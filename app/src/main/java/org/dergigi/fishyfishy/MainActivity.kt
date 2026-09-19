@@ -23,6 +23,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -276,8 +277,8 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                     Text("+ Latin", fontSize = 12.sp, color = Muted)
                 }
                 OutlinedTextField(value = query, onValueChange = { query = it }, placeholder = { Text("Name, colour, or a clue…") }, leadingIcon = { Icon(Icons.Rounded.Search, null) }, trailingIcon = { if (query.isNotEmpty()) IconButton(onClick = { query = "" }) { Icon(Icons.Rounded.Close, "Clear search") } }, singleLine = true, shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth())
-                Row(Modifier.fillMaxWidth().padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("All", "Fish", "Critters", "Stripes").forEach { tag -> FilterChip(selected = filter == tag, onClick = { filter = tag }, label = { Text(tag) }) }
+                Row(Modifier.fillMaxWidth().padding(top = 6.dp).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf("All", "Fish", "Critters", "Stripes", "Blue", "Schools").forEach { tag -> FilterChip(selected = filter == tag, onClick = { filter = tag }, label = { Text(tag) }) }
                 }
             }
         }
@@ -304,16 +305,19 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
 
 @Composable private fun SpeciesScreen(species: Species, language: String, spotted: Boolean, speak: (String, String) -> Unit, add: () -> Unit) {
     val context = LocalContext.current
-    val credits = remember(species.id) {
+    val photos = listOf(GuidePhoto(species.image, species.id, species.photoLabel)) + species.otherPhotos
+    var photoIndex by rememberSaveable(species.id) { mutableStateOf(0) }
+    val photo = photos[photoIndex.coerceIn(photos.indices)]
+    val credits = remember(photo.creditId) {
         val all = JSONArray(context.assets.open("photo-credits.json").bufferedReader().use { it.readText() })
-        (0 until all.length()).map { all.getJSONObject(it) }.first { it.getString("id") == species.id }
+        (0 until all.length()).map { all.getJSONObject(it) }.first { it.getString("id") == photo.creditId }
     }
     LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
         item {
-            Image(painterResource(species.image), species.name, Modifier.fillMaxWidth().heightIn(max = 430.dp).aspectRatio(1.4f).clip(Shell), contentScale = ContentScale.Crop)
+            Image(painterResource(photo.image), "${species.name}: ${photo.label}", Modifier.fillMaxWidth().heightIn(max = 430.dp).aspectRatio(1.4f).clip(Shell), contentScale = ContentScale.Crop)
         }
         item {
-            Eyebrow(if (spotted) "A familiar face · spotted by you" else "Meet a Madeira neighbour")
+            Eyebrow(if (spotted) "A familiar face · spotted by you" else if (species.comparisonNote != null) "A lookalike to compare" else "Meet a Madeira neighbour")
             Spacer(Modifier.height(9.dp)); Heading(species.display(language))
             Text(species.scientific, fontStyle = FontStyle.Italic, color = Muted, fontSize = 16.sp, modifier = Modifier.padding(top = 6.dp))
         }
@@ -331,6 +335,12 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                 }
             }
         }
+        if (photos.size > 1) item {
+            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                photos.forEachIndexed { index, option -> FilterChip(selected = photoIndex == index, onClick = { photoIndex = index }, label = { Text(option.label) }) }
+            }
+        }
+        species.comparisonNote?.let { note -> item { FactBlock("Compare carefully", note, Icons.Rounded.Search) } }
         item { FactBlock("How to spot it", species.clues, Icons.Rounded.Search) }
         item {
             Surface(color = Mist, shape = Shell) {
@@ -467,11 +477,11 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         model.loadError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
         FactBlock("Be a kind ocean visitor", "Explore with a grown-up, give wildlife space, and leave animals and shells where they belong. There is always something new to notice.", Icons.Rounded.Waves)
         Text("About the guide", fontWeight = FontWeight.Bold, fontSize = 22.sp)
-        Text("A starter guide to 12 species, not every creature in Madeira. Compare several clues; a photo alone does not confirm an identification. Common names vary by region. Names are provided in English, Portuguese, German and scientific form; lessons and interface are in English. Some references use older scientific synonyms.", color = Muted, lineHeight = 23.sp)
+        Text("A starter guide to ${guide.size} species, not every creature in Madeira. Compare several clues; a photo alone does not confirm an identification. Common names vary by region. Names are provided in English, Portuguese, German and scientific form; lessons and interface are in English. Some references use older scientific synonyms.", color = Muted, lineHeight = 23.sp)
         TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://ifcn.madeira.gov.pt/en/areas-protegidas/rocha-do-navio/valores-naturais.html".toUri())) }) { Text("Madeira wildlife · IFCN ↗") }
         Text("Species references and photo credits appear on each creature’s page. Photos are reproduced under their individual Creative Commons licences; app code is MIT licensed.", color = Muted, lineHeight = 23.sp)
         TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/dergigi/fishyfishy".toUri())) }) { Text("Source code & feedback ↗") }
-        Text("FishyFishy 0.1.0 · Made with love for the sea", color = Teal, fontSize = 12.sp)
+        Text("FishyFishy 0.2.0 · Made with love for the sea", color = Teal, fontSize = 12.sp)
     }
 }
 

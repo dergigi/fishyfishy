@@ -3,11 +3,15 @@ package org.dergigi.fishyfishy
 import androidx.annotation.DrawableRes
 import java.text.Normalizer
 
+data class GuidePhoto(@DrawableRes val image: Int, val creditId: String, val label: String)
+
 data class Species(
     val id: String, val name: String, val portuguese: String, val german: String,
     val scientific: String, @DrawableRes val image: Int, val group: String,
     val clues: String, val fact: String, val habitat: String, val mission: String,
     val tags: List<String>, val source: String,
+    val photoLabel: String = "Reference photo", val otherPhotos: List<GuidePhoto> = emptyList(),
+    val comparisonNote: String? = null,
 )
 
 val guide = listOf(
@@ -37,10 +41,11 @@ val guide = listOf(
         "Rocky sea floor", "How many broad bands can you count?",
         listOf("Silver", "Stripes", "Big"), "https://www.fishbase.se/summary/Diplodus-cervinus.html"),
     Species("damselfish", "Canary damselfish", "Castanheta-preta", "Kanaren-Demoiselle", "Similiparma lurida", R.drawable.damselfish, "Fish",
-        "A small, deep-bodied dark fish. Young fish can have bright blue edges on their fins.",
+        "A small, deep-bodied black or dark brown fish. Young fish can show bright blue markings around the head and fin edges. A blue stripe alone is not enough to identify it.",
         "The father guards the eggs. Give him plenty of room around his rocky nest.",
         "Rocks and crevices", "Look for a flash of blue against the dark body.",
-        listOf("Dark", "Small"), "https://fishes-fnam.linnaeus.naturalis.nl/linnaeus_ng/app/views/species/nsr_taxon.php?epi=141&id=109624"),
+        listOf("Dark", "Black", "Blue", "Small"), "https://fishes-fnam.linnaeus.naturalis.nl/linnaeus_ng/app/views/species/nsr_taxon.php?epi=141&id=109624",
+        otherPhotos = listOf(GuidePhoto(R.drawable.damselfish_blue, "damselfish_blue", "Blue markings"))),
     Species("comber", "Blacktail comber", "Garoupa", "König-Sägebarsch", "Serranus atricauda", R.drawable.comber, "Fish",
         "An elongated fish with a large mouth, mottled brown markings and pale lines along its sides.",
         "A patient little hunter: it eats smaller fish and crustaceans around the rocks.",
@@ -51,6 +56,33 @@ val guide = listOf(
         "Rocky holes make good hiding places for this fish. A young grouper has a lot of growing to do!",
         "Rocky shelters and ledges", "Look for its rounded tail and pale blotches.",
         listOf("Big", "Spots", "Dark"), "https://www.fishbase.se/summary/Epinephelus-marginatus.html"),
+    Species("chromis", "Mediterranean damselfish", "Castanheta", "Mönchsfisch", "Chromis chromis", R.drawable.chromis, "Fish",
+        "Young fish can have glowing blue stripes along a dark body. Adults lose that bright blue and become brown, with a forked tail.",
+        "Growing up can mean changing colours! A bright blue youngster and a brown adult can be the very same kind of fish.",
+        "Rocky coasts; compare with Madeira’s other damselfishes", "Look at the young fish and the adult. What changed?",
+        listOf("Blue", "Black", "Dark", "Stripes", "Small", "Schools"), "https://doris.ffessm.fr/Especes/Chromis-chromis-Castagnole-739",
+        photoLabel = "Young fish", otherPhotos = listOf(GuidePhoto(R.drawable.chromis_adult, "chromis_adult", "Adult")),
+        comparisonNote = "A lookalike to compare, not a confirmed ID for your sighting. Madeira also has Canary damselfish and Azores chromis. Check the body shape and tail as well as the stripe; keep the sighting uncertain if you cannot tell them apart."),
+    Species("azores_chromis", "Azores chromis", "Castanheta-baia", "Azoren-Riffbarsch", "Chromis limbata", R.drawable.azores_chromis, "Fish",
+        "A small, deep-bodied golden-brown fish with big eyes and a forked tail. Often hovers in groups above the rocks; breeding males can look bluish-purple.",
+        "These little fish pick tiny drifting animals from the water. The sea carries their snacks past them!",
+        "Groups hovering above rocky reefs", "Is the school hovering over rocks, or racing through open water?",
+        listOf("Schools", "Small", "Dark"), "https://museubiodiversidade.uevora.pt/elenco-de-especies/biodiversidade-actual/animais/cordados/peixes/chromis-limbata/"),
+    Species("bogue", "Bogue", "Boga", "Gelbstriemenbrasse", "Boops boops", R.drawable.bogue, "Fish",
+        "A slender silver fish with large eyes and thin golden lines along its sides. More elongated than the oval salema. Often swims in busy shoals.",
+        "Boops boops is its real scientific name! The name refers to its big eyes.",
+        "Shoals in the water above coastal rocks and sand", "Compare the big eyes and skinny shape with the salema.",
+        listOf("Schools", "Silver", "Stripes", "Small"), "https://doris.ffessm.fr/Especes/Boops-boops-Bogue-2701"),
+    Species("sand_smelt", "Sand smelt", "Peixe-rei", "Ährenfisch", "Atherina presbyter", R.drawable.sand_smelt, "Fish",
+        "A narrow, almost see-through body with a bright silver stripe and large eyes. Look for two separate small fins on its back. Several sand smelts look alike.",
+        "A sand smelt’s shiny stripe flashes when it turns. A whole shoal can sparkle like tiny mirrors!",
+        "Shallow coastal water, often near the surface", "Look for a silver stripe running from the head towards the tail.",
+        listOf("Schools", "Silver", "Stripes", "Small"), "https://doris.ffessm.fr/Especes/Atherina-presbyter-Pretre-423"),
+    Species("sardine", "European sardine", "Sardinha", "Europäische Sardine", "Sardina pilchardus", R.drawable.sardine, "Fish",
+        "A slender silvery fish with a blue-green back and one dorsal fin. It can have dark spots along its side. A distant silver shoal is not enough to tell sardines from other fish.",
+        "Sardines travel in schools and eat tiny drifting food called plankton. Together they can make a shimmering cloud.",
+        "Schools in coastal open water", "Compare the body and fins with sand smelt and bogue before choosing a name.",
+        listOf("Schools", "Silver", "Small"), "https://doris.ffessm.fr/Especes/Sardina-pilchardus-Sardine-d-Europe-3095"),
     Species("octopus", "Common octopus", "Polvo-comum", "Gewöhnlicher Krake", "Octopus vulgaris", R.drawable.octopus, "Critters",
         "Eight arms with suckers and a soft body. Its colour and skin texture can change, helping it blend into rocks.",
         "An octopus explores with its arms. The suckers help it hold on and sense what it touches.",
@@ -74,5 +106,5 @@ val guide = listOf(
 )
 fun normalized(text: String): String = Normalizer.normalize(text, Normalizer.Form.NFD)
     .replace(Regex("\\p{M}"), "").lowercase(java.util.Locale.ROOT)
-fun Species.matches(query: String): Boolean = normalized(listOf(name, portuguese, german, scientific, clues).joinToString(" "))
+fun Species.matches(query: String): Boolean = normalized((listOf(name, portuguese, german, scientific, clues) + tags + if ("Schools" in tags) listOf("shoal swarm") else emptyList()).joinToString(" "))
     .contains(normalized(query.trim()))
