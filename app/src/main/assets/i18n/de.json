@@ -98,7 +98,6 @@
   "Madeira wildlife · IFCN ↗": "Madeiras Tierwelt · IFCN ↗",
   "Species references and photo credits appear on each creature’s page. Photos are reproduced under their individual Creative Commons licences; app code is MIT licensed.": "Artenquellen und Fotonachweise stehen auf jeder Tierseite. Fotos werden unter ihren jeweiligen Creative-Commons-Lizenzen verwendet; der App-Code steht unter der MIT-Lizenz.",
   "Source code & feedback ↗": "Quellcode und Feedback ↗",
-  "FishyFishy 0.4.0 · Made with love for the sea": "FishyFishy 0.4.0 · Mit Liebe zum Meer gemacht",
   "Close swim": "Tour schließen",
   "Edit our swim": "Unsere Tour bearbeiten",
   "Our new swim": "Unsere neue Tour",
@@ -408,5 +407,6 @@
   "1 creature": "1 Tier",
   "%d min · %s": "%d Min. · %s",
   "Selected: %d · To check: %d": "Ausgewählt: %d · Zu bestimmen: %d",
-  "%s · %d min": "%s · %d Min."
+  "%s · %d min": "%s · %d Min.",
+  "FishyFishy %s · Made with love for the sea": "FishyFishy %s · Mit Liebe zum Meer gemacht"
 }

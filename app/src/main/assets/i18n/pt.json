@@ -98,7 +98,6 @@
   "Madeira wildlife · IFCN ↗": "Vida selvagem da Madeira · IFCN ↗",
   "Species references and photo credits appear on each creature’s page. Photos are reproduced under their individual Creative Commons licences; app code is MIT licensed.": "As referências e os créditos das fotos estão na página de cada animal. As fotos são usadas sob as respetivas licenças Creative Commons; o código tem licença MIT.",
   "Source code & feedback ↗": "Código-fonte e sugestões ↗",
-  "FishyFishy 0.4.0 · Made with love for the sea": "FishyFishy 0.4.0 · Feito com amor pelo mar",
   "Close swim": "Fechar mergulho",
   "Edit our swim": "Editar o nosso mergulho",
   "Our new swim": "O nosso novo mergulho",
@@ -408,5 +407,6 @@
   "1 creature": "1 animal",
   "%d min · %s": "%d min · %s",
   "Selected: %d · To check: %d": "Selecionados: %d · Por confirmar: %d",
-  "%s · %d min": "%s · %d min"
+  "%s · %d min": "%s · %d min",
+  "FishyFishy %s · Made with love for the sea": "FishyFishy %s · Feito com amor pelo mar"
 }

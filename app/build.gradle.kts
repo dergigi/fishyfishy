@@ -19,8 +19,8 @@ android {
         applicationId = "org.dergigi.fishyfishy"
         minSdk = 26
         targetSdk = 35
-        versionCode = 6
-        versionName = "0.4.0"
+        versionCode = 7
+        versionName = "0.5.0"
     }
     if (canSign) signingConfigs.create("release") {
         storeFile = file(signingValue("OEM_STORE_FILE")!!)
@@ -39,7 +39,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
-    buildFeatures { compose = true }
+    buildFeatures { compose = true; buildConfig = true }
     lint {
         abortOnError = true
         // Lifecycle 2.9's LiveData detector crashes with AGP 8.7's Kotlin analysis.

@@ -532,7 +532,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://ifcn.madeira.gov.pt/en/areas-protegidas/rocha-do-navio/valores-naturais.html".toUri())) }) { Text(strings("Madeira wildlife · IFCN ↗")) }
         Text(strings("Species references and photo credits appear on each creature’s page. Photos are reproduced under their individual Creative Commons licences; app code is MIT licensed."), color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 23.sp)
         TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/dergigi/fishyfishy".toUri())) }) { Text(strings("Source code & feedback ↗")) }
-        Text(strings("FishyFishy 0.4.0 · Made with love for the sea"), color = MaterialTheme.colorScheme.primary, fontSize = 12.sp)
+        Text(strings("FishyFishy %s · Made with love for the sea", BuildConfig.VERSION_NAME), color = MaterialTheme.colorScheme.primary, fontSize = 12.sp)
     }
 }
 
