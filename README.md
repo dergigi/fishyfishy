@@ -20,25 +20,27 @@ Requires JDK 17 and Android SDK 35.
 
 ## What you can do
 
-- Browse 12 Madeira fish and ocean creatures with bundled reference photos.
+- Browse 17 fish and ocean creatures, including Madeira species and a blue-striped lookalike with bundled reference photos.
 - Switch guide names between English, Portuguese and German; see all names and scientific names on detail pages.
 - Hear names with installed offline Android voices. Read short English lessons and identification clues.
 - Log a swim's date, location, duration, notes and sightings; mark guesses as uncertain.
 - Revisit, edit and delete swims; grow a collection of confirmed discoveries.
 - Play a gentle photo identification game together.
+- Choose a journal folder and sync it between devices with Syncthing; resolve simultaneous edits in the app.
+- Compare young and adult fish photos; filter for blue markings or schools.
 - Export and restore a JSON journal backup through Android's document picker.
 
 Android 8.0 or newer. Phone layouts use bottom navigation; wider tablet windows use a navigation rail and adaptive photo grids. The interface and lessons are currently English. The app provides a small reference guide, not automated photo identification.
 
 ## Privacy
 
-No network permission, analytics, account, GPS access or advertising. The journal is stored in an atomic app-private file. Android automatic backup is disabled; export a backup from the info screen before uninstalling or changing devices. Backups contain swim locations and notes, so save them somewhere appropriate. Restoring adds missing swim IDs and retains existing local edits.
+No network permission, analytics, account, GPS access or advertising. Choose a local folder in Info → Journal storage to keep all journal data on the filesystem and sync it with Syncthing. See [folder setup and conflict handling](docs/STORAGE.md). Until a folder is selected, the journal stays in app-private storage. Android automatic backup is disabled; preserve your chosen folder or export a backup before uninstalling. Backups contain swim locations and notes, so save them somewhere appropriate. Restoring adds missing swim IDs and retains existing local edits.
 
 The app requests only offline text-to-speech voices. Voice availability depends on the device. Source links open in the user's browser only when tapped.
 
 ## Sources and image licences
 
-See [guide references](docs/GUIDE-SOURCES.md) and the bundled [photo credits](app/src/main/assets/photo-credits.json). Each species detail page includes its reference, photographer, licence and source link. Photos retain their own CC BY-SA licences; the MIT licence applies to the app code and original artwork.
+See [guide references](docs/GUIDE-SOURCES.md) and the bundled [photo credits](app/src/main/assets/photo-credits.json). Each species detail page includes its reference, photographer, licence and source link. Photos retain their own CC BY / CC BY-SA licences; the MIT licence applies to the app code and original artwork.
 
 ## Signed releases and Zapstore
 
