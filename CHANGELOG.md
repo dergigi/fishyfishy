@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-09-19
+
 ### Added
 - Native Android app foundation for phones and tablets.
 - Offline photo field guide to 12 Madeira fish and ocean creatures, with identification clues and learning prompts.
 - English, Portuguese, German and scientific names, with offline pronunciation for spoken languages.
 - Local swim journal with dates, places, duration, notes and uncertain sightings.
 - Personal discovery collection, photo identification game, and journal backup export and restore.
+- Signed Android releases and Zapstore publishing under the existing publisher identity.
+
+[Unreleased]: https://github.com/dergigi/fishyfishy/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/dergigi/fishyfishy/releases/tag/v0.1.0

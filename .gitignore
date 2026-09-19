@@ -8,3 +8,4 @@ local.properties
 *.keystore
 .DS_Store
 .idea/
+.kotlin/
