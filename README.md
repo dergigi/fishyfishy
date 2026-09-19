@@ -65,6 +65,6 @@ python3 scripts/zapstore-publish.py
 python3 scripts/zapstore-publish.py --env-file /path/to/publisher/.env
 ```
 
-The script uses `zsp`, checks the Android certificate's identity link, then publishes the exact signed local APK with the committed metadata and changelog. `SIGN_WITH` must be configured in the environment or the supplied file. For the first publication, add `--link-identity` to create the certificate proof using the configured Android signing key. Your Nostr bunker must be online and may ask you to approve signing requests. See [Zapstore publishing documentation](https://zapstore.dev/docs/publish).
+The script uses `zsp` (and `nak` for first-time certificate linking), checks the Android certificate's identity link, then publishes the exact signed local APK with the committed metadata and changelog. `SIGN_WITH` must be configured in the environment or the supplied file. For the first publication, add `--link-identity` to create the certificate proof using the configured Android signing key. Your Nostr bunker must be online and may ask you to approve signing requests. See [Zapstore publishing documentation](https://zapstore.dev/docs/publish).
 
 No emulator testing was performed for the initial release. Build, JVM tests, Android Lint and APK signature checks are used before publication. The narrow `NullSafeMutableLiveData` lint exclusion matches Boris's workaround for a Lifecycle/AGP detector incompatibility; the app uses Compose state rather than LiveData.

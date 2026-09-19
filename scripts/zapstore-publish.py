@@ -55,8 +55,12 @@ if args.link_identity:
     with tempfile.TemporaryDirectory(prefix='fishyfishy-signing-') as directory:
         link = Path(directory) / ('signing' + suffix)
         link.symlink_to(key_file)
-        subprocess.run(['zsp', 'identity', '--link-key', str(link), '--key-alias', setting('OEM_KEY_ALIAS'),
-                        '--relays', 'wss://relay.zapstore.dev'], env=env, cwd=root, check=True)
+        if not shutil.which('nak', path=env['PATH']):
+            raise SystemExit('Install nak for noninteractive certificate-proof publishing.')
+        proof = subprocess.run(['zsp', 'identity', '--link-key', str(link), '--key-alias', setting('OEM_KEY_ALIAS'),
+                                '--offline'], env=env, cwd=root, check=True, capture_output=True, text=True)
+        subprocess.run(['nak', 'event', 'wss://relay.zapstore.dev'], input=proof.stdout,
+                       text=True, env=env, cwd=root, check=True)
 
 # Verify the signing key's publisher link before publishing.
 apk = root / 'app/build/outputs/apk/release/app-release.apk'
