@@ -2,6 +2,8 @@
 
 A little journal for big underwater discoveries. An offline snorkeling journal and visual Madeira field guide for curious kids and their grown-ups.
 
+[Install from Zapstore](https://zapstore.dev/apps/org.dergigi.fishyfishy) · [Download the APK](https://github.com/dergigi/fishyfishy/releases/latest)
+
 Native Android, built with Kotlin and Jetpack Compose. Package: `org.dergigi.fishyfishy`.
 
 ## Build

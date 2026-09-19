@@ -34,5 +34,6 @@ if not env.get('GITHUB_TOKEN') and shutil.which('gh'):
 apk = root / 'app/build/outputs/apk/release/app-release.apk'
 if not apk.exists():
     raise SystemExit('Build :app:assembleRelease before publishing.')
-subprocess.run(['zsp', 'identity', '--verify', str(apk)], env=env, cwd=root, check=True)
+publisher = next(line.split(':', 1)[1].strip() for line in (root / 'zapstore.yaml').read_text().splitlines() if line.startswith('pubkey:'))
+subprocess.run(['zsp', 'identity', '--verify', str(apk)], input=publisher + '\n', text=True, env=env, cwd=root, check=True)
 subprocess.run(['zsp', 'publish', 'zapstore.yaml', '--quiet', '--skip-preview', '--skip-certificate-linking'], env=env, cwd=root, check=True)
