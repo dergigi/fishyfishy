@@ -1,0 +1,78 @@
+package org.dergigi.fishyfishy
+
+import androidx.annotation.DrawableRes
+import java.text.Normalizer
+
+data class Species(
+    val id: String, val name: String, val portuguese: String, val german: String,
+    val scientific: String, @DrawableRes val image: Int, val group: String,
+    val clues: String, val fact: String, val habitat: String, val mission: String,
+    val tags: List<String>, val source: String,
+)
+
+val guide = listOf(
+    Species("wrasse", "Ornate wrasse", "Peixe-verde", "Meerpfau", "Thalassoma pavo", R.drawable.wrasse, "Fish",
+        "A slim, busy swimmer with blue-green markings. Colours and stripes change with age and sex.",
+        "This little hunter searches the rocks for tiny shellfish and other small animals to eat.",
+        "Rocky shores and seaweed", "Can you spot the blue markings on its face?",
+        listOf("Colourful", "Stripes", "Small"), "https://doris.ffessm.fr/Especes/Thalassoma-pavo-Girelle-paon-744"),
+    Species("salema", "Salema", "Salema", "Goldstrieme", "Sarpa salpa", R.drawable.salema, "Fish",
+        "A silver, oval fish with several thin golden lines running from head to tail. Often swims in a group.",
+        "Grown-up salema graze on sea plants. A group can look like a little underwater lawn-mowing team!",
+        "Seaweed-covered rocks", "Watch a school. Do the fish turn together?",
+        listOf("Silver", "Stripes", "Schools"), "https://www.fishbase.se/summary/Sarpa-salpa.html"),
+    Species("parrotfish", "Mediterranean parrotfish", "Bodião", "Europäischer Papageifisch", "Sparisoma cretense", R.drawable.parrotfish, "Fish",
+        "Look for a blunt head and a beak-like mouth. Females can be red with a dark saddle and yellow patches; males are greyer.",
+        "Its teeth join together to make a little beak, useful for nibbling food from rocks.",
+        "Rocky reefs with algae", "Can you see its beak working? Watch without getting closer.",
+        listOf("Colourful", "Red", "Big"), "https://www.fishbase.se/summary/Sparisoma-cretense.html"),
+    Species("bream", "White seabream", "Sargo", "Geißbrasse", "Diplodus sargus", R.drawable.bream, "Fish",
+        "A flat, silvery body with dark vertical bars and a dark patch near the tail. Bars can look faint on adults.",
+        "Its strong teeth help it eat crunchy food, including small shellfish.",
+        "Rocky shallows", "Find the dark patch just before its tail.",
+        listOf("Silver", "Stripes"), "https://www.fishbase.se/summary/Diplodus-sargus.html"),
+    Species("zebra", "Zebra seabream", "Sargo-veado", "Zebrabrasse", "Diplodus cervinus", R.drawable.zebra, "Fish",
+        "An oval, silvery fish with broad dark bands. Its bands are much wider than a white seabream's.",
+        "It looks for small animals on the sea floor, using its sturdy mouth to pick up food.",
+        "Rocky sea floor", "How many broad bands can you count?",
+        listOf("Silver", "Stripes", "Big"), "https://www.fishbase.se/summary/Diplodus-cervinus.html"),
+    Species("damselfish", "Canary damselfish", "Castanheta-preta", "Kanaren-Demoiselle", "Similiparma lurida", R.drawable.damselfish, "Fish",
+        "A small, deep-bodied dark fish. Young fish can have bright blue edges on their fins.",
+        "The father guards the eggs. Give him plenty of room around his rocky nest.",
+        "Rocks and crevices", "Look for a flash of blue against the dark body.",
+        listOf("Dark", "Small"), "https://fishes-fnam.linnaeus.naturalis.nl/linnaeus_ng/app/views/species/nsr_taxon.php?epi=141&id=109624"),
+    Species("comber", "Blacktail comber", "Garoupa", "König-Sägebarsch", "Serranus atricauda", R.drawable.comber, "Fish",
+        "An elongated fish with a large mouth, mottled brown markings and pale lines along its sides.",
+        "A patient little hunter: it eats smaller fish and crustaceans around the rocks.",
+        "Rocky ledges", "Does it pause and hover near a rock?",
+        listOf("Spots", "Stripes"), "https://www.fishbase.se/summary/Serranus-atricauda.html"),
+    Species("grouper", "Dusky grouper", "Mero", "Brauner Zackenbarsch", "Epinephelus marginatus", R.drawable.grouper, "Fish",
+        "A chunky brown fish with pale blotches, a big mouth and a rounded tail. Young ones are smaller than you might expect.",
+        "Rocky holes make good hiding places for this fish. A young grouper has a lot of growing to do!",
+        "Rocky shelters and ledges", "Look for its rounded tail and pale blotches.",
+        listOf("Big", "Spots", "Dark"), "https://www.fishbase.se/summary/Epinephelus-marginatus.html"),
+    Species("octopus", "Common octopus", "Polvo-comum", "Gewöhnlicher Krake", "Octopus vulgaris", R.drawable.octopus, "Critters",
+        "Eight arms with suckers and a soft body. Its colour and skin texture can change, helping it blend into rocks.",
+        "An octopus explores with its arms. The suckers help it hold on and sense what it touches.",
+        "Rocky holes and the sea floor", "Can you find its eyes without disturbing its hiding place?",
+        listOf("Arms", "Camouflage"), "https://www.fao.org/4/i3489e/i3489e.pdf"),
+    Species("cuttlefish", "Common cuttlefish", "Choco", "Gewöhnlicher Tintenfisch", "Sepia officinalis", R.drawable.cuttlefish, "Critters",
+        "An oval body with a rippling fin around the edge. Look for big eyes and arms gathered at the front.",
+        "A cuttlefish can change its skin pattern. It can seem to disappear against sand or stones!",
+        "Sand near rocks and sea plants", "Watch the wavy fin around its body.",
+        listOf("Arms", "Camouflage"), "https://www.marlin.ac.uk/species/detail/1098"),
+    Species("urchin", "Long-spined sea urchin", "Ouriço-do-mar-de-espinhos-longos", "Schwarzer Diademseeigel", "Diadema africanum", R.drawable.urchin, "Critters",
+        "A dark round body with very long, thin spines. Several urchin species live here; spine length is one clue.",
+        "Under those spines is a tiny grazer. This urchin eats algae from the sea floor.",
+        "Rocky sea floor and crevices", "Look from a distance. Those long spines need lots of space!",
+        listOf("Dark", "Spines"), "https://www.mapress.com/zootaxa/2013/f/z03636p170f.pdf"),
+    Species("starfish", "Purple sea star", "Estrela-do-mar", "Purpurstern", "Ophidiaster ophidianus", R.drawable.starfish, "Critters",
+        "Usually five long, rounded arms. Despite its name, it can look orange, red or purple. Other sea stars can look similar.",
+        "A sea star moves with tiny tube feet underneath its arms. Watch patiently: it is a very slow explorer.",
+        "Rocky sea floor", "Count the arms with your eyes. Leave it where it lives.",
+        listOf("Arms", "Red"), "https://doris.ffessm.fr/Especes/Ophidiaster-ophidianus-Etoile-de-mer-violette-670"),
+)
+fun normalized(text: String): String = Normalizer.normalize(text, Normalizer.Form.NFD)
+    .replace(Regex("\\p{M}"), "").lowercase(java.util.Locale.ROOT)
+fun Species.matches(query: String): Boolean = normalized(listOf(name, portuguese, german, scientific, clues).joinToString(" "))
+    .contains(normalized(query.trim()))
