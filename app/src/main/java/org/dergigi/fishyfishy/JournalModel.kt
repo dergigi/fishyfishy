@@ -79,6 +79,7 @@ class JournalModel(application: Application) : AndroidViewModel(application) {
                 val selection = withContext(Dispatchers.IO) {
                     resolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                     val target = FolderRevisionStore(resolver, uri)
+                    target.verifyWritable()
                     val next = if (uri.toString() == folderUri) SyncJournal(target).read() else SyncJournal(store).copyTo(target)
                     require(next.revisions.containsAll(snapshot.revisions)) { "Some existing swims are missing. Let the folder finish syncing first." }
                     val label = target.displayName()

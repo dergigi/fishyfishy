@@ -43,6 +43,7 @@ class FolderRevisionStore(private val resolver: ContentResolver, val tree: Uri) 
     private val root = DocumentsContract.buildDocumentUriUsingTree(tree, DocumentsContract.getTreeDocumentId(tree))
     private data class Entry(val name: String, val uri: Uri, val mime: String)
     private fun children(): List<Entry> {
+        displayName() // A missing root must not look like an empty journal.
         val uri = DocumentsContract.buildChildDocumentsUriUsingTree(tree, DocumentsContract.getTreeDocumentId(tree))
         val projection = arrayOf(DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME, DocumentsContract.Document.COLUMN_MIME_TYPE)
         return requireNotNull(resolver.query(uri, projection, null, null, null)) { "Folder is unavailable." }.use { cursor ->
@@ -53,6 +54,14 @@ class FolderRevisionStore(private val resolver: ContentResolver, val tree: Uri) 
     }
     fun displayName(): String = requireNotNull(resolver.query(root, arrayOf(DocumentsContract.Document.COLUMN_DISPLAY_NAME), null, null, null)).use {
         require(it.moveToFirst()); it.getString(0)
+    }
+    fun verifyWritable() {
+        var probe = requireNotNull(DocumentsContract.createDocument(resolver, root, "application/octet-stream", ".pending-${UUID.randomUUID()}")) { "Cannot write to this folder." }
+        try {
+            requireNotNull(resolver.openOutputStream(probe, "wt")).use { it.write("FishyFishy".toByteArray()) }
+            probe = requireNotNull(DocumentsContract.renameDocument(resolver, probe, ".pending-${UUID.randomUUID()}")) { "Folder cannot commit files." }
+            require(requireNotNull(resolver.openInputStream(probe)).bufferedReader().use { it.readText() } == "FishyFishy")
+        } finally { DocumentsContract.deleteDocument(resolver, probe) }
     }
     override fun read(): List<SwimRevision> = children().filter { isRevision(it.name) && it.mime != DocumentsContract.Document.MIME_TYPE_DIR }
         .map { requireNotNull(resolver.openInputStream(it.uri)).readRevision() }
