@@ -103,7 +103,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         onDispose { lifecycle.removeObserver(observer) }
     }
     LaunchedEffect(foreground) { if (!foreground) speak.stop() }
-    LaunchedEffect(detail, quiz) { speak.stop() }
+    LaunchedEffect(detail, quiz, about, editor) { speak.stop() }
     LaunchedEffect(foreground, model.folderUri) {
         if (foreground) {
             model.refresh()
@@ -466,7 +466,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://ifcn.madeira.gov.pt/en/areas-protegidas/rocha-do-navio/valores-naturais.html".toUri())) }) { Text("Madeira wildlife · IFCN ↗") }
         Text("Species references and photo credits appear on each creature’s page. Photos are reproduced under their individual Creative Commons licences; app code is MIT licensed.", color = Muted, lineHeight = 23.sp)
         TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/dergigi/fishyfishy".toUri())) }) { Text("Source code & feedback ↗") }
-        Text("FishyFishy 0.3.0 · Made with love for the sea", color = Teal, fontSize = 12.sp)
+        Text("FishyFishy 0.3.1 · Made with love for the sea", color = Teal, fontSize = 12.sp)
     }
 }
 
