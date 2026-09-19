@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Choose a journal folder using Android's folder picker, for automatic Syncthing syncing between devices.
+- Immutable swim history with explicit resolution of simultaneous offline edits and synced deletions.
+
 ## [0.1.0] - 2026-09-19
 
 ### Added
