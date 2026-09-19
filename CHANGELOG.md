@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-19
+
 ### Added
 - Open guide photos full-screen with pinch zoom, panning, double-tap zoom and accessible zoom/reset controls.
+- Thirty coastal guide entries with licensed photos, multilingual names, identification clues and child-friendly lessons, bringing the guide to 47 entries.
+- Puffers, morays, blennies, seabreams, trumpetfish, crabs, shrimp, limpets, anemones, fireworms, a hermit crab, a sponge and more urchins and sea stars.
+- Sand, Shell and Legs filters, plus documented Madeira coverage and identification limits.
 
 ## [0.2.0] - 2026-09-19
 
@@ -29,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Personal discovery collection, photo identification game, and journal backup export and restore.
 - Signed Android releases and Zapstore publishing under the existing publisher identity.
 
-[Unreleased]: https://github.com/dergigi/fishyfishy/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/dergigi/fishyfishy/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/dergigi/fishyfishy/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/dergigi/fishyfishy/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/dergigi/fishyfishy/releases/tag/v0.1.0

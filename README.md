@@ -20,17 +20,18 @@ Requires JDK 17 and Android SDK 35.
 
 ## What you can do
 
-- Browse 17 fish and ocean creatures, including Madeira species and a blue-striped lookalike with bundled reference photos.
+- Browse 47 fish and ocean creatures, including Madeira species and a blue-striped lookalike with bundled reference photos.
 - Switch guide names between English, Portuguese and German; see all names and scientific names on detail pages.
 - Hear names with installed offline Android voices. Read short English lessons and identification clues.
 - Log a swim's date, location, duration, notes and sightings; mark guesses as uncertain.
 - Revisit, edit and delete swims; grow a collection of confirmed discoveries.
 - Play a gentle photo identification game together.
 - Choose a journal folder and sync it between devices with Syncthing; resolve simultaneous edits in the app.
-- Compare young and adult fish photos; filter for blue markings or schools.
+- Compare young and adult fish photos; tap to open full-screen and pinch or double-tap to zoom.
+- Find sandy-bottom fish, shells and many-legged critters with visual clue filters.
 - Export and restore a JSON journal backup through Android's document picker.
 
-Android 8.0 or newer. Phone layouts use bottom navigation; wider tablet windows use a navigation rail and adaptive photo grids. The interface and lessons are currently English. The app provides a small reference guide, not automated photo identification.
+Android 8.0 or newer. Phone layouts use bottom navigation; wider tablet windows use a navigation rail and adaptive photo grids. The interface and lessons are currently English. The app provides a curated coastal reference guide, not automated photo identification.
 
 ## Privacy
 

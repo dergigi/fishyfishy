@@ -278,7 +278,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                 }
                 OutlinedTextField(value = query, onValueChange = { query = it }, placeholder = { Text("Name, colour, or a clue…") }, leadingIcon = { Icon(Icons.Rounded.Search, null) }, trailingIcon = { if (query.isNotEmpty()) IconButton(onClick = { query = "" }) { Icon(Icons.Rounded.Close, "Clear search") } }, singleLine = true, shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth())
                 Row(Modifier.fillMaxWidth().padding(top = 6.dp).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("All", "Fish", "Critters", "Stripes", "Blue", "Schools").forEach { tag -> FilterChip(selected = filter == tag, onClick = { filter = tag }, label = { Text(tag) }) }
+                    listOf("All", "Fish", "Critters", "Stripes", "Blue", "Schools", "Sand", "Shell", "Legs").forEach { tag -> FilterChip(selected = filter == tag, onClick = { filter = tag }, label = { Text(tag) }) }
                 }
             }
         }
@@ -481,11 +481,11 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         model.loadError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
         FactBlock("Be a kind ocean visitor", "Explore with a grown-up, give wildlife space, and leave animals and shells where they belong. There is always something new to notice.", Icons.Rounded.Waves)
         Text("About the guide", fontWeight = FontWeight.Bold, fontSize = 22.sp)
-        Text("A starter guide to ${guide.size} species, not every creature in Madeira. Compare several clues; a photo alone does not confirm an identification. Common names vary by region. Names are provided in English, Portuguese, German and scientific form; lessons and interface are in English. Some references use older scientific synonyms.", color = Muted, lineHeight = 23.sp)
+        Text("A coastal guide with ${guide.size} entries, not every creature in Madeira. What you see varies with habitat, depth and season. Compare several clues; a photo alone does not confirm an identification. Common names vary by region. Names are provided in English, Portuguese, German and scientific form; lessons and interface are in English. Some references use older scientific synonyms.", color = Muted, lineHeight = 23.sp)
         TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://ifcn.madeira.gov.pt/en/areas-protegidas/rocha-do-navio/valores-naturais.html".toUri())) }) { Text("Madeira wildlife · IFCN ↗") }
         Text("Species references and photo credits appear on each creature’s page. Photos are reproduced under their individual Creative Commons licences; app code is MIT licensed.", color = Muted, lineHeight = 23.sp)
         TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/dergigi/fishyfishy".toUri())) }) { Text("Source code & feedback ↗") }
-        Text("FishyFishy 0.2.0 · Made with love for the sea", color = Teal, fontSize = 12.sp)
+        Text("FishyFishy 0.3.0 · Made with love for the sea", color = Teal, fontSize = 12.sp)
     }
 }
 
