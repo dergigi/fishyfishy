@@ -61,12 +61,8 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.UUID
 
-private val Ink = Color(0xFF193E3D)
-private val Teal = Color(0xFF14796F)
-private val Paper = Color(0xFFF7F6F0)
-private val Mist = Color(0xFFE3EEE8)
+private val OceanInk = Color(0xFF193E3D)
 private val Gold = Color(0xFFF0C86C)
-private val Muted = Color(0xFF617573)
 private val Shell = RoundedCornerShape(24.dp)
 private val dateFormat = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH)
 
@@ -75,9 +71,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MaterialTheme(colorScheme = lightColorScheme(primary = Teal, onPrimary = Color.White,
-                secondary = Ink, background = Paper, surface = Paper, onSurface = Ink,
-                onBackground = Ink, surfaceVariant = Mist, onSurfaceVariant = Muted)) { FishyApp() }
+            FishyTheme { FishyApp() }
         }
     }
 }
@@ -138,17 +132,17 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     LaunchedEffect(model.message) { model.message?.let { snackbar.showSnackbar(it); model.message = null } }
     fun addSwim(id: String? = null) { model.clearOperationError(); seed = id; editor = "new-${UUID.randomUUID()}" }
     BackHandler(detail != null || about || quiz) { when { quiz -> quiz = false; about -> about = false; else -> detail = null } }
-    BoxWithConstraints(Modifier.fillMaxSize().background(Paper)) {
+    BoxWithConstraints(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         val wide = maxWidth >= 700.dp
-        Scaffold(containerColor = Paper, snackbarHost = { SnackbarHost(snackbar) },
-            bottomBar = { if (!wide && detail == null && !about && !quiz) NavigationBar(containerColor = Paper) {
+        Scaffold(containerColor = MaterialTheme.colorScheme.background, snackbarHost = { SnackbarHost(snackbar) },
+            bottomBar = { if (!wide && detail == null && !about && !quiz) NavigationBar(containerColor = MaterialTheme.colorScheme.background) {
                 listOf("Explore" to Icons.Rounded.Explore, "Our swims" to Icons.Rounded.Waves, "Collection" to Icons.Rounded.AutoAwesome).forEachIndexed { i, item ->
                     NavigationBarItem(selected = tab == i, onClick = { tab = i }, icon = { Icon(item.second, null) }, label = { Text(item.first) })
                 }
             } },
         ) { padding ->
             Row(Modifier.fillMaxSize().padding(padding)) {
-                if (wide) NavigationRail(containerColor = Paper, modifier = Modifier.fillMaxHeight().padding(top = 18.dp), header = {
+                if (wide) NavigationRail(containerColor = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxHeight().padding(top = 18.dp), header = {
                     Image(painterResource(R.drawable.app_icon), "FishyFishy", Modifier.size(48.dp).clip(CircleShape))
                     Spacer(Modifier.height(26.dp))
                 }) {
@@ -161,7 +155,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                         if (detail != null || about || quiz) IconButton(onClick = { detail = null; about = false; quiz = false }) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") }
                         else Image(painterResource(R.drawable.app_icon), null, Modifier.size(36.dp).clip(CircleShape))
                         Text("fishyfishy", fontWeight = FontWeight.ExtraBold, fontSize = 23.sp, modifier = Modifier.padding(start = 10.dp).weight(1f), letterSpacing = (-1).sp)
-                        IconButton(onClick = { about = true }) { Icon(Icons.Rounded.Info, "Storage, sources and backups", tint = Muted) }
+                        IconButton(onClick = { about = true }) { Icon(Icons.Rounded.Info, "Storage, sources and backups", tint = MaterialTheme.colorScheme.onSurfaceVariant) }
                     }
                     if (!model.loading && (model.loadError != null || model.conflicts.isNotEmpty())) {
                         TextButton(onClick = { about = true }) {
@@ -197,10 +191,10 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
 }
 
 @Composable private fun Eyebrow(text: String, light: Boolean = false) {
-    Text(text.uppercase(Locale.ENGLISH), fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp, color = if (light) Color(0xFFB9E0D0) else Teal)
+    Text(text.uppercase(Locale.ENGLISH), fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp, color = if (light) Color(0xFFB9E0D0) else MaterialTheme.colorScheme.primary)
 }
 @Composable private fun Heading(text: String, modifier: Modifier = Modifier) {
-    Text(text, modifier, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, fontSize = 32.sp, lineHeight = 37.sp, color = Ink)
+    Text(text, modifier, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, fontSize = 32.sp, lineHeight = 37.sp, color = MaterialTheme.colorScheme.onSurface)
 }
 @Composable private fun FishArt(modifier: Modifier = Modifier) {
     Canvas(modifier) {
@@ -211,7 +205,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
             val tail = Path().apply { moveTo(x+s*.65f,y); lineTo(x+s*1.05f,y-s*.35f); lineTo(x+s*.98f,y+s*.35f); close() }
             drawPath(tail,c)
             drawOval(c, Offset(x-s*.55f,y-s*.31f),Size(s*1.35f,s*.62f))
-            drawCircle(Ink, s*.045f,Offset(x-s*.32f,y-s*.04f))
+            drawCircle(OceanInk, s*.045f,Offset(x-s*.32f,y-s*.04f))
             drawLine(c.copy(alpha=.5f),Offset(x,y),Offset(x+s*.15f,y+s*.22f),s*.1f)
         }
         fish(w*.57f,h*.49f,w*.38f,Gold)
@@ -230,14 +224,14 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                 Eyebrow("Madeira · your little ocean club")
                 Spacer(Modifier.height(10.dp))
                 Heading("Big wonders.\nLittle explorers.")
-                Text("Learn their names. Remember your adventures.", color = Muted, modifier = Modifier.padding(top = 9.dp, bottom = 20.dp))
-                BoxWithConstraints(Modifier.fillMaxWidth().clip(Shell).background(Ink)) {
+                Text("Learn their names. Remember your adventures.", color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 9.dp, bottom = 20.dp))
+                BoxWithConstraints(Modifier.fillMaxWidth().clip(Shell).background(OceanInk)) {
                     val roomy = maxWidth > 500.dp
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f).padding(24.dp)) {
                             Eyebrow("Just add curiosity", true)
                             Text(if (swims == 0) "Your first swim\nstarts a story." else "More sea.\nMore memories.", fontFamily = FontFamily.Serif, fontSize = 27.sp, lineHeight = 32.sp, color = Color.White, modifier = Modifier.padding(vertical = 14.dp))
-                            Button(onClick = add, colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Ink)) {
+                            Button(onClick = add, colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = OceanInk)) {
                                 Icon(Icons.Rounded.Add, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text("Log a swim", fontWeight = FontWeight.Bold)
                             }
                         }
@@ -247,15 +241,15 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                 Spacer(Modifier.height(26.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) { Eyebrow("Meet the neighbours"); Text("Madeira field guide", fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 5.dp)) }
-                    Text("${guide.size} creatures", fontSize = 12.sp, color = Muted)
+                    Text("${guide.size} creatures", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 Spacer(Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Text("Names", color = Muted, fontSize = 13.sp)
+                    Text("Names", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp)
                     listOf("en" to "EN", "pt" to "PT", "de" to "DE").forEach { (code, label) ->
                         FilterChip(selected = language == code, onClick = { onLanguage(code) }, label = { Text(label) })
                     }
-                    Text("+ Latin", fontSize = 12.sp, color = Muted)
+                    Text("+ Latin", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 OutlinedTextField(value = query, onValueChange = { query = it }, placeholder = { Text("Name, colour, or a clue…") }, leadingIcon = { Icon(Icons.Rounded.Search, null) }, trailingIcon = { if (query.isNotEmpty()) IconButton(onClick = { query = "" }) { Icon(Icons.Rounded.Close, "Clear search") } }, singleLine = true, shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth())
                 Row(Modifier.fillMaxWidth().padding(top = 6.dp).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -266,20 +260,20 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         items(filtered, key = { it.id }) { species -> SpeciesCard(species, language, species.id in confirmed, { open(species.id) }) }
         if (filtered.isEmpty()) item(span = { GridItemSpan(maxLineSpan) }) { EmptyState("A little mystery…", "Try another name or clue. This is a small starter guide, so your creature might not be here yet.") }
         item(span = { GridItemSpan(maxLineSpan) }) {
-            Text("Look with your eyes. Leave only bubbles.\nPhotos are clues: colours can vary with age and light.", color = Muted, fontSize = 12.sp, lineHeight = 19.sp, modifier = Modifier.padding(vertical = 14.dp))
+            Text("Look with your eyes. Leave only bubbles.\nPhotos are clues: colours can vary with age and light.", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, lineHeight = 19.sp, modifier = Modifier.padding(vertical = 14.dp))
         }
     }
 }
 
 @Composable private fun SpeciesCard(species: Species, language: String, spotted: Boolean, open: () -> Unit) {
-    Card(onClick = open, shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+    Card(onClick = open, shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)) {
         Box {
             Image(painterResource(species.image), species.name, Modifier.fillMaxWidth().aspectRatio(1.25f), contentScale = ContentScale.Crop)
-            if (spotted) Surface(Modifier.align(Alignment.TopEnd).padding(8.dp), shape = CircleShape, color = Gold) { Icon(Icons.Rounded.Check, "Spotted", Modifier.padding(6.dp).size(16.dp), tint = Ink) }
+            if (spotted) Surface(Modifier.align(Alignment.TopEnd).padding(8.dp), shape = CircleShape, color = Gold) { Icon(Icons.Rounded.Check, "Spotted", Modifier.padding(6.dp).size(16.dp), tint = OceanInk) }
         }
         Column(Modifier.padding(14.dp)) {
             Text(species.display(language), fontSize = 16.sp, fontWeight = FontWeight.Bold, lineHeight = 20.sp)
-            Text(species.scientific, fontSize = 11.sp, fontStyle = FontStyle.Italic, color = Muted, modifier = Modifier.padding(top = 5.dp), lineHeight = 15.sp)
+            Text(species.scientific, fontSize = 11.sp, fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 5.dp), lineHeight = 15.sp)
         }
     }
 }
@@ -300,23 +294,23 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         item {
             Image(painterResource(photo.image), "${species.name}: ${photo.label}", Modifier.fillMaxWidth().heightIn(max = 430.dp).aspectRatio(1.4f).clip(Shell).clickable(onClickLabel = "Open photo to zoom") { showPhoto = true }, contentScale = ContentScale.Crop)
         }
-        item { Text("Tap the photo to zoom in", color = Muted, fontSize = 12.sp) }
+        item { Text("Tap the photo to zoom in", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp) }
         item {
             Eyebrow(if (spotted) "A familiar face · spotted by you" else if (species.comparisonNote != null) "A lookalike to compare" else "Meet a Madeira neighbour")
             Spacer(Modifier.height(9.dp)); Heading(species.display(language))
-            Text(species.scientific, fontStyle = FontStyle.Italic, color = Muted, fontSize = 16.sp, modifier = Modifier.padding(top = 6.dp))
+            Text(species.scientific, fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 16.sp, modifier = Modifier.padding(top = 6.dp))
         }
         item {
-            Surface(shape = Shell, color = Color.White) {
+            Surface(shape = Shell, color = MaterialTheme.colorScheme.surfaceContainerLow) {
                 Column(Modifier.padding(18.dp)) {
                     Eyebrow("One creature. Many names.")
                     listOf(Triple("English", species.name, "en"), Triple("Português", species.portuguese, "pt"), Triple("Deutsch", species.german, "de")).forEach { (label, name, code) ->
                         Row(Modifier.fillMaxWidth().padding(top = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Column(Modifier.weight(1f)) { Text(label, fontSize = 11.sp, color = Muted); Text(name, fontWeight = FontWeight.SemiBold, fontSize = 17.sp) }
+                            Column(Modifier.weight(1f)) { Text(label, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant); Text(name, fontWeight = FontWeight.SemiBold, fontSize = 17.sp) }
                             SpeakButton(speak, name, code, "Listen in $label")
                         }
                     }
-                    Text("Scientific · ${species.scientific}", color = Muted, fontStyle = FontStyle.Italic, modifier = Modifier.padding(top = 14.dp))
+                    Text("Scientific · ${species.scientific}", color = MaterialTheme.colorScheme.onSurfaceVariant, fontStyle = FontStyle.Italic, modifier = Modifier.padding(top = 14.dp))
                 }
             }
         }
@@ -328,7 +322,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         species.comparisonNote?.let { note -> item { FactBlock("Compare carefully", note, Icons.Rounded.Search) } }
         item { FactBlock("How to spot it", species.clues, Icons.Rounded.Search) }
         item {
-            Surface(color = Mist, shape = Shell) {
+            Surface(color = MaterialTheme.colorScheme.surfaceVariant, shape = Shell) {
                 Column(Modifier.padding(22.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) { Eyebrow("Little ocean lesson"); Spacer(Modifier.weight(1f)); SpeakButton(speak, species.fact, "en", "Read this fact in English") }
                     Text(species.fact, fontFamily = FontFamily.Serif, fontSize = 23.sp, lineHeight = 30.sp)
@@ -339,15 +333,15 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         item { FactBlock("Your explorer mission", species.mission, Icons.Rounded.AutoAwesome) }
         guideFilms[species.id]?.let { film ->
             item {
-                Surface(color = Mist, shape = Shell) {
+                Surface(color = MaterialTheme.colorScheme.surfaceVariant, shape = Shell) {
                     Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Icon(Icons.Rounded.PlayCircle, null, tint = Teal, modifier = Modifier.size(36.dp))
-                            Column { Eyebrow("Watch together"); Text("${film.publisher} · English", color = Muted, fontSize = 12.sp) }
+                            Icon(Icons.Rounded.PlayCircle, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(36.dp))
+                            Column { Eyebrow("Watch together"); Text("${film.publisher} · English", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp) }
                         }
                         Text(film.title, fontWeight = FontWeight.Bold, fontSize = 19.sp, lineHeight = 25.sp)
-                        Text(film.topic, color = Teal, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
-                        Text(film.note, color = Muted, lineHeight = 22.sp)
+                        Text(film.topic, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+                        Text(film.note, color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 22.sp)
                         FilledTonalButton(onClick = {
                             speak.stop()
                             try { context.startActivity(Intent(Intent.ACTION_VIEW, film.url.toUri())) }
@@ -355,16 +349,16 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                                 Toast.makeText(context, "Install YouTube or a browser to watch this film.", Toast.LENGTH_LONG).show()
                             }
                         }) { Icon(Icons.Rounded.PlayArrow, null); Spacer(Modifier.width(8.dp)); Text("Watch on YouTube ↗") }
-                        Text("Opens YouTube or your browser · Internet needed", color = Muted, fontSize = 11.sp)
+                        Text("Opens YouTube or your browser · Internet needed", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp)
                     }
                 }
             }
         }
         item { Button(onClick = add, modifier = Modifier.fillMaxWidth().heightIn(min = 54.dp)) { Icon(Icons.Rounded.Add, null); Spacer(Modifier.width(8.dp)); Text("Log a swim with this creature") } }
         item {
-            Text("Not sure? Keep it as a possible sighting. Never touch, chase or feed wildlife.", color = Muted, fontSize = 13.sp)
+            Text("Not sure? Keep it as a possible sighting. Never touch, chase or feed wildlife.", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp)
             TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, species.source.toUri())) }) { Text("Read the species reference ↗") }
-            Text("Photo: ${credits.getString("author")} · ${credits.getString("license")}\n${credits.getString("changes")}", fontSize = 11.sp, color = Muted)
+            Text("Photo: ${credits.getString("author")} · ${credits.getString("license")}\n${credits.getString("changes")}", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
             TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, credits.getString("source").toUri())) }) { Text("Photo source & licence ↗", fontSize = 12.sp) }
         }
     }
@@ -372,15 +366,15 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
 
 @Composable private fun FactBlock(title: String, body: String, icon: ImageVector) {
     Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-        Icon(icon, null, tint = Teal, modifier = Modifier.padding(top = 3.dp).size(24.dp))
-        Column { Text(title, fontWeight = FontWeight.Bold, fontSize = 17.sp); Text(body, color = Muted, lineHeight = 23.sp, modifier = Modifier.padding(top = 6.dp)) }
+        Icon(icon, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 3.dp).size(24.dp))
+        Column { Text(title, fontWeight = FontWeight.Bold, fontSize = 17.sp); Text(body, color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 23.sp, modifier = Modifier.padding(top = 6.dp)) }
     }
 }
 @Composable private fun EmptyState(title: String, body: String) {
-    Column(Modifier.fillMaxWidth().clip(Shell).background(Mist).padding(28.dp)) {
-        Icon(Icons.Rounded.Waves, null, tint = Teal, modifier = Modifier.size(36.dp))
+    Column(Modifier.fillMaxWidth().clip(Shell).background(MaterialTheme.colorScheme.surfaceVariant).padding(28.dp)) {
+        Icon(Icons.Rounded.Waves, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(36.dp))
         Text(title, fontFamily = FontFamily.Serif, fontSize = 26.sp, modifier = Modifier.padding(top = 18.dp, bottom = 8.dp))
-        Text(body, color = Muted, lineHeight = 23.sp)
+        Text(body, color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 23.sp)
     }
 }
 
@@ -397,26 +391,26 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         item { Button(onClick = add, enabled = model.loadError == null && !model.busy, modifier = Modifier.fillMaxWidth().heightIn(min = 54.dp)) { Icon(Icons.Rounded.Add, null); Spacer(Modifier.width(8.dp)); Text("Log a swim") } }
         if (model.trips.isEmpty()) item { EmptyState("A journal full of possibility", "Where did you go? What did you see? Save your first swim together, even if the fish are still a mystery.") }
         items(model.trips, key = { it.id }) { trip ->
-            Card(onClick = { edit(trip) }, shape = Shell, colors = CardDefaults.cardColors(containerColor = Color.White)) {
+            Card(onClick = { edit(trip) }, shape = Shell, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)) {
                 Column(Modifier.padding(20.dp)) {
                     Eyebrow(LocalDate.parse(trip.date).format(dateFormat))
                     Text(trip.place, fontSize = 24.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 8.dp))
-                    Text("${trip.minutes} min · ${trip.sightings.size} creature${if (trip.sightings.size == 1) "" else "s"}${if (trip.uncertain.isNotEmpty()) " · ${trip.uncertain.size} to check" else ""}", color = Muted, fontSize = 13.sp)
+                    Text("${trip.minutes} min · ${trip.sightings.size} creature${if (trip.sightings.size == 1) "" else "s"}${if (trip.uncertain.isNotEmpty()) " · ${trip.uncertain.size} to check" else ""}", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp)
                     if (trip.sightings.isNotEmpty()) Row(Modifier.padding(top = 14.dp), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
                         guide.filter { it.id in trip.sightings }.take(5).forEach { s -> Image(painterResource(s.image), s.name + if (s.id in trip.uncertain) ", possible sighting" else "", Modifier.size(46.dp).clip(CircleShape), contentScale = ContentScale.Crop) }
-                        if (trip.sightings.size > 5) Text("+${trip.sightings.size - 5}", Modifier.padding(12.dp), color = Teal)
+                        if (trip.sightings.size > 5) Text("+${trip.sightings.size - 5}", Modifier.padding(12.dp), color = MaterialTheme.colorScheme.primary)
                     }
-                    if (trip.notes.isNotBlank()) Text(trip.notes, color = Muted, maxLines = 3, modifier = Modifier.padding(top = 14.dp), lineHeight = 21.sp)
+                    if (trip.notes.isNotBlank()) Text(trip.notes, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 3, modifier = Modifier.padding(top = 14.dp), lineHeight = 21.sp)
                 }
             }
         }
-        item { Text("Choose a journal folder in the ⓘ menu to sync your swims between devices with Syncthing.", color = Muted, fontSize = 12.sp, modifier = Modifier.padding(vertical = 8.dp)) }
+        item { Text("Choose a journal folder in the ⓘ menu to sync your swims between devices with Syncthing.", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.padding(vertical = 8.dp)) }
     }
 }
 @Composable private fun Stat(value: String, label: String, modifier: Modifier) {
-    Column(modifier.clip(Shell).background(Mist).padding(20.dp)) {
+    Column(modifier.clip(Shell).background(MaterialTheme.colorScheme.surfaceVariant).padding(20.dp)) {
         Text(value, fontSize = 32.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold)
-        Text(label, color = Muted, fontSize = 12.sp)
+        Text(label, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
     }
 }
 
@@ -425,19 +419,19 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         item(span = { GridItemSpan(maxLineSpan) }) {
             Column {
                 Eyebrow("Your ocean discoveries"); Spacer(Modifier.height(10.dp)); Heading("Familiar fins\n& new friends.")
-                Text("${confirmed.size} of ${guide.size} creatures spotted", color = Muted, modifier = Modifier.padding(top = 14.dp, bottom = 10.dp))
-                LinearProgressIndicator(progress = { confirmed.size.toFloat() / guide.size }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(CircleShape), color = Teal, trackColor = Mist)
+                Text("${confirmed.size} of ${guide.size} creatures spotted", color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 14.dp, bottom = 10.dp))
+                LinearProgressIndicator(progress = { confirmed.size.toFloat() / guide.size }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(CircleShape), color = MaterialTheme.colorScheme.primary, trackColor = MaterialTheme.colorScheme.surfaceVariant)
                 Spacer(Modifier.height(24.dp))
                 Surface(shape = Shell, color = Gold.copy(alpha = .35f)) {
                     Column(Modifier.padding(22.dp)) {
                         Eyebrow("A little game for dry land")
                         Text("Who’s that fish?", fontSize = 25.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 8.dp))
-                        Text("Look at a photo. Learn a name. Play together.", color = Muted)
+                        Text("Look at a photo. Learn a name. Play together.", color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Button(onClick = quiz, modifier = Modifier.padding(top = 14.dp)) { Text("Let’s play"); Spacer(Modifier.width(8.dp)); Icon(Icons.Rounded.PlayArrow, null) }
                     }
                 }
                 Text(if (confirmed.isEmpty()) "Your collection is waiting" else "Spotted by you", fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 26.dp, bottom = 8.dp))
-                if (confirmed.isEmpty()) Text("Log a swim and mark the creatures you recognised. Possible sightings stay in your journal until you’re sure.", color = Muted, lineHeight = 23.sp)
+                if (confirmed.isEmpty()) Text("Log a swim and mark the creatures you recognised. Possible sightings stay in your journal until you’re sure.", color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 23.sp)
             }
         }
         items(guide.filter { it.id in confirmed }, key = { it.id }) { s -> SpeciesCard(s, language, true) { open(s.id) } }
@@ -455,14 +449,14 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         options.forEach { id ->
             val option = guide.first { it.id == id }
             OutlinedButton(onClick = { answered = id; speak.speak(option.display(language), language) }, enabled = answered == null,
-                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp), colors = ButtonDefaults.outlinedButtonColors(disabledContainerColor = if (answered != null && id == question) Mist else Color.Transparent, disabledContentColor = Ink)) {
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp), colors = ButtonDefaults.outlinedButtonColors(disabledContainerColor = if (answered != null && id == question) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent, disabledContentColor = MaterialTheme.colorScheme.onSurface)) {
                 if (answered != null && id == question) { Icon(Icons.Rounded.Check, null); Spacer(Modifier.width(8.dp)) }
                 Text(option.display(language))
             }
         }
         if (answered != null) {
             Text(if (answered == question) "You found it!" else "A good chance to learn a new name!", fontSize = 23.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold)
-            Text("${fish.name} · ${fish.portuguese}\n${fish.german}\n${fish.scientific}", color = Muted, lineHeight = 24.sp)
+            Text("${fish.name} · ${fish.portuguese}\n${fish.german}\n${fish.scientific}", color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 24.sp)
             Text(fish.fact, lineHeight = 23.sp)
             Button(onClick = {
                 question = guide.filterNot { it.id == question }.random().id
@@ -476,7 +470,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     val context = LocalContext.current
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
         Eyebrow("Made for curious little humans"); Heading("A pocketful\nof ocean wonder.")
-        Text("FishyFishy is a snorkeling journal for kids and their grown-ups. Made for discovering the ocean around Madeira, one swim at a time.", color = Muted, lineHeight = 24.sp)
+        Text("FishyFishy is a snorkeling journal for kids and their grown-ups. Made for discovering the ocean around Madeira, one swim at a time.", color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 24.sp)
         FactBlock("Yours, even offline", "No account, ads or tracking. Your swims are saved as files. You choose whether to sync them with another app. The photos and guide are included in the app. Read-aloud uses installed offline Android voices.", Icons.Rounded.FavoriteBorder)
         StorageSection(model, chooseFolder)
         FactBlock("Keep your memories", "Export a backup before changing phones or uninstalling. Restore adds missing swims and keeps existing swims and deletions. If you use Syncthing, sync the whole journal folder instead.", Icons.Rounded.SaveAlt)
@@ -485,11 +479,11 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         model.loadError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
         FactBlock("Be a kind ocean visitor", "Explore with a grown-up, give wildlife space, and leave animals and shells where they belong. There is always something new to notice.", Icons.Rounded.Waves)
         Text("About the guide", fontWeight = FontWeight.Bold, fontSize = 22.sp)
-        Text("A coastal guide with ${guide.size} entries, not every creature in Madeira. What you see varies with habitat, depth and season. Compare several clues; a photo alone does not confirm an identification. Common names vary by region. Names are provided in English, Portuguese, German and scientific form; lessons and interface are in English. Some references use older scientific synonyms.", color = Muted, lineHeight = 23.sp)
+        Text("A coastal guide with ${guide.size} entries, not every creature in Madeira. What you see varies with habitat, depth and season. Compare several clues; a photo alone does not confirm an identification. Common names vary by region. Names are provided in English, Portuguese, German and scientific form; lessons and interface are in English. Some references use older scientific synonyms.", color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 23.sp)
         TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://ifcn.madeira.gov.pt/en/areas-protegidas/rocha-do-navio/valores-naturais.html".toUri())) }) { Text("Madeira wildlife · IFCN ↗") }
-        Text("Species references and photo credits appear on each creature’s page. Photos are reproduced under their individual Creative Commons licences; app code is MIT licensed.", color = Muted, lineHeight = 23.sp)
+        Text("Species references and photo credits appear on each creature’s page. Photos are reproduced under their individual Creative Commons licences; app code is MIT licensed.", color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 23.sp)
         TextButton(onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/dergigi/fishyfishy".toUri())) }) { Text("Source code & feedback ↗") }
-        Text("FishyFishy 0.4.0 · Made with love for the sea", color = Teal, fontSize = 12.sp)
+        Text("FishyFishy 0.4.0 · Made with love for the sea", color = MaterialTheme.colorScheme.primary, fontSize = 12.sp)
     }
 }
 
@@ -510,7 +504,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     val dirty = date != (existing?.date ?: LocalDate.now().toString()) || place != (existing?.place ?: "") || duration != (existing?.minutes?.toString() ?: "30") || notes != (existing?.notes ?: "") || selected.toSet() != initialSelected || unsure.toSet() != (existing?.uncertain ?: emptySet<String>())
     fun dismiss() { if (!busy) { if (dirty) discarding = true else close() } }
     Dialog(onDismissRequest = { dismiss() }, properties = DialogProperties(usePlatformDefaultWidth = false, dismissOnBackPress = !busy, dismissOnClickOutside = false)) {
-        Surface(Modifier.fillMaxSize(), color = Paper) {
+        Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             Column(Modifier.fillMaxSize().safeDrawingPadding().imePadding(), horizontalAlignment = Alignment.CenterHorizontally) {
                 Row(Modifier.widthIn(max = 800.dp).fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { dismiss() }, enabled = !busy) { Icon(Icons.Rounded.Close, "Close swim") }
@@ -533,34 +527,34 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                             OutlinedTextField(duration, { if (it.length <= 3 && it.all(Char::isDigit)) duration = it }, label = { Text("Minutes") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true, modifier = Modifier.width(115.dp), shape = RoundedCornerShape(16.dp), enabled = !busy)
                         }
                     }
-                    item { Text("Who did you meet?", fontSize = 24.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold); Text("Tap a creature to add it. It’s okay to be unsure.", color = Muted, modifier = Modifier.padding(top = 5.dp)) }
+                    item { Text("Who did you meet?", fontSize = 24.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold); Text("Tap a creature to add it. It’s okay to be unsure.", color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 5.dp)) }
                     item { OutlinedTextField(search, { search = it }, placeholder = { Text("Find a creature…") }, leadingIcon = { Icon(Icons.Rounded.Search, null) }, singleLine = true, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) }
                     items(guide.filter { it.matches(search) }, key = { it.id }) { s ->
                         val checked = s.id in selected
-                        Surface(shape = RoundedCornerShape(18.dp), color = if (checked) Mist else Color.White) {
+                        Surface(shape = RoundedCornerShape(18.dp), color = if (checked) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.surfaceContainerLow) {
                             Column {
                                 Row(Modifier.fillMaxWidth().clickable(enabled = !busy) { if (checked) { selected = selected - s.id; unsure = unsure - s.id } else selected = selected + s.id }.padding(12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                                     Image(painterResource(s.image), null, Modifier.size(64.dp).clip(RoundedCornerShape(12.dp)), contentScale = ContentScale.Crop)
-                                    Column(Modifier.weight(1f)) { Text(s.display(language), fontWeight = FontWeight.Bold); Text(s.scientific, fontSize = 11.sp, fontStyle = FontStyle.Italic, color = Muted) }
+                                    Column(Modifier.weight(1f)) { Text(s.display(language), fontWeight = FontWeight.Bold); Text(s.scientific, fontSize = 11.sp, fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant) }
                                     Checkbox(checked = checked, onCheckedChange = null)
                                 }
                                 if (checked) Row(Modifier.fillMaxWidth().padding(start = 18.dp, end = 12.dp, bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                                    Text("Not sure yet", color = Muted, fontSize = 13.sp, modifier = Modifier.weight(1f))
+                                    Text("Not sure yet", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp, modifier = Modifier.weight(1f))
                                     Switch(checked = s.id in unsure, onCheckedChange = { unsure = if (it) unsure + s.id else unsure - s.id }, enabled = !busy)
                                 }
                             }
                         }
                     }
-                    if (guide.none { it.matches(search) }) item { Text("Not in our starter guide? Describe it in your notes below.", color = Muted) }
+                    if (guide.none { it.matches(search) }) item { Text("Not in our starter guide? Describe it in your notes below.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
                     item { OutlinedTextField(notes, { if (it.length <= 10000) notes = it }, label = { Text("A memory to keep") }, placeholder = { Text("A mystery fish? A funny moment? Tell your story…") }, minLines = 3, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), enabled = !busy) }
-                    item { Text("${selected.size} creatures selected · ${unsure.size} to check", color = Teal) }
+                    item { Text("${selected.size} creatures selected · ${unsure.size} to check", color = MaterialTheme.colorScheme.primary) }
                     (error ?: loadError ?: operationError)?.let { message -> item { Text(message, color = MaterialTheme.colorScheme.error) } }
                 }
                 Button(onClick = {
                     val trip = Trip(draftId, date, place.trim(), duration.toIntOrNull() ?: 0, notes.trim(), selected.toSet(), unsure.toSet())
                     try { trip.validate(); error = null; save(trip) } catch (e: Exception) { error = e.message ?: "Please check your swim details." }
                 }, enabled = !busy && loadError == null, modifier = Modifier.widthIn(max = 800.dp).fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp).heightIn(min = 54.dp)) {
-                    if (busy) CircularProgressIndicator(Modifier.size(22.dp), color = Color.White, strokeWidth = 2.dp) else { Icon(Icons.Rounded.Check, null); Spacer(Modifier.width(8.dp)); Text("Save our swim") }
+                    if (busy) CircularProgressIndicator(Modifier.size(22.dp), color = LocalContentColor.current, strokeWidth = 2.dp) else { Icon(Icons.Rounded.Check, null); Spacer(Modifier.width(8.dp)); Text("Save our swim") }
                 }
             }
         }
@@ -573,25 +567,25 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     var confirmFolder by remember { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("Journal storage", fontWeight = FontWeight.Bold, fontSize = 22.sp)
-        Surface(color = Mist, shape = Shell) {
+        Surface(color = MaterialTheme.colorScheme.surfaceVariant, shape = Shell) {
             Column(Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Icon(Icons.Rounded.FolderOpen, null, tint = Teal)
+                Icon(Icons.Rounded.FolderOpen, null, tint = MaterialTheme.colorScheme.primary)
                 Text(model.folderLabel ?: "App storage · this device only", fontWeight = FontWeight.Bold)
-                Text(if (model.folderUri == null) "Choose a local folder to keep your journal outside the app and sync it between devices." else "Your swims are read and saved directly in this folder. Sync the entire folder with Syncthing, then select its local copy in FishyFishy on each device.", color = Muted, lineHeight = 22.sp)
-                model.lastChecked?.let { Text("Folder last read at $it", color = Muted, fontSize = 12.sp) }
+                Text(if (model.folderUri == null) "Choose a local folder to keep your journal outside the app and sync it between devices." else "Your swims are read and saved directly in this folder. Sync the entire folder with Syncthing, then select its local copy in FishyFishy on each device.", color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 22.sp)
+                model.lastChecked?.let { Text("Folder last read at $it", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp) }
             }
         }
         Button(onClick = { confirmFolder = true }, enabled = !model.busy, modifier = Modifier.fillMaxWidth()) {
             Text(if (model.folderUri == null) "Choose journal folder" else "Change or reconnect folder")
         }
         OutlinedButton(onClick = { model.refresh() }, enabled = !model.busy, modifier = Modifier.fillMaxWidth()) { Text("Refresh journal") }
-        Text("Changes appear when you return to FishyFishy and while it’s open. Let Syncthing finish syncing before editing the same swim on another device. Folder sync is managed by Syncthing, not FishyFishy.", fontSize = 13.sp, color = Muted, lineHeight = 20.sp)
+        Text("Changes appear when you return to FishyFishy and while it’s open. Let Syncthing finish syncing before editing the same swim on another device. Folder sync is managed by Syncthing, not FishyFishy.", fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, lineHeight = 20.sp)
         model.operationError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
         model.conflicts.forEach { (id, versions) ->
             Surface(color = Gold.copy(alpha = .2f), shape = Shell) {
                 Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text("Two devices changed a swim", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                    Text("Both versions are safe. Choose the one to keep. Past versions stay in the folder’s history.", color = Muted)
+                    Text("Both versions are safe. Choose the one to keep. Past versions stay in the folder’s history.", color = MaterialTheme.colorScheme.onSurfaceVariant)
                     versions.forEachIndexed { index, revision ->
                         HorizontalDivider()
                         val trip = revision.trip
@@ -599,7 +593,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                         else {
                             Text("Version ${index + 1}: ${trip.place}", fontWeight = FontWeight.Bold)
                             Text("${trip.date} · ${trip.minutes} min")
-                            Text(guide.filter { it.id in trip.sightings }.joinToString { it.name + if (it.id in trip.uncertain) " (?)" else "" }.ifBlank { "No creatures logged" }, color = Muted)
+                            Text(guide.filter { it.id in trip.sightings }.joinToString { it.name + if (it.id in trip.uncertain) " (?)" else "" }.ifBlank { "No creatures logged" }, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             if (trip.notes.isNotEmpty()) Text(trip.notes)
                         }
                         OutlinedButton(onClick = { model.resolve(id, revision, versions.map { it.id }.toSet()) }, enabled = !model.busy && model.loadError == null) {

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Light and dark appearance that follows the device’s system theme, including cards, controls and the swim date picker.
+
 ## [0.4.0] - 2026-09-19
 
 ### Added
