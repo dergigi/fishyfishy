@@ -113,10 +113,9 @@ class SyncJournal(private val store: RevisionStore) {
         return result
     }
     fun import(trips: List<Trip>): JournalSnapshot {
-        trips.forEach { trip ->
-            // Include deletion histories: an old backup must not resurrect a deleted swim.
-            if (read().revisions.none { it.tripId == trip.id }) store.append(RevisionCodec.seed(trip))
-        }
+        // Include deletion histories: an old backup must not resurrect a deleted swim.
+        val known = read().revisions.map { it.tripId }.toMutableSet()
+        trips.forEach { trip -> if (known.add(trip.id)) store.append(RevisionCodec.seed(trip)) }
         return read()
     }
 }

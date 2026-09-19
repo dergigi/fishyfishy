@@ -53,6 +53,9 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import kotlinx.coroutines.delay
 import org.json.JSONArray
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -112,6 +115,22 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     var editor by rememberSaveable { mutableStateOf<String?>(null) }
     var seed by rememberSaveable { mutableStateOf<String?>(null) }
     val speak = rememberSpeaker()
+    val lifecycle = (context as ComponentActivity).lifecycle
+    var foreground by remember { mutableStateOf(lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) }
+    DisposableEffect(lifecycle) {
+        val observer = LifecycleEventObserver { _, _ -> foreground = lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) }
+        lifecycle.addObserver(observer)
+        onDispose { lifecycle.removeObserver(observer) }
+    }
+    LaunchedEffect(foreground, model.folderUri) {
+        if (foreground) {
+            model.refresh()
+            while (true) { delay(5000); if (model.folderUri != null) model.refresh() }
+        }
+    }
+    val chooseFolder = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+        if (uri != null) model.selectFolder(uri)
+    }
     val snackbar = remember { SnackbarHostState() }
     val confirmed = model.trips.flatMap { it.sightings - it.uncertain }.toSet()
     val export = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
@@ -135,7 +154,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         }
     }
     LaunchedEffect(model.message) { model.message?.let { snackbar.showSnackbar(it); model.message = null } }
-    fun addSwim(id: String? = null) { seed = id; editor = "new-${UUID.randomUUID()}" }
+    fun addSwim(id: String? = null) { model.clearOperationError(); seed = id; editor = "new-${UUID.randomUUID()}" }
     BackHandler(detail != null || about || quiz) { when { quiz -> quiz = false; about -> about = false; else -> detail = null } }
     BoxWithConstraints(Modifier.fillMaxSize().background(Paper)) {
         val wide = maxWidth >= 700.dp
@@ -160,16 +179,21 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                         if (detail != null || about || quiz) IconButton(onClick = { detail = null; about = false; quiz = false }) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") }
                         else Image(painterResource(R.drawable.app_icon), null, Modifier.size(36.dp).clip(CircleShape))
                         Text("fishyfishy", fontWeight = FontWeight.ExtraBold, fontSize = 23.sp, modifier = Modifier.padding(start = 10.dp).weight(1f), letterSpacing = (-1).sp)
-                        IconButton(onClick = { about = true }) { Icon(Icons.Rounded.Info, "About, sources and backups", tint = Muted) }
+                        IconButton(onClick = { about = true }) { Icon(Icons.Rounded.Info, "Storage, sources and backups", tint = Muted) }
+                    }
+                    if (!model.loading && (model.loadError != null || model.conflicts.isNotEmpty())) {
+                        TextButton(onClick = { about = true }) {
+                            Text(if (model.loadError != null) "Journal storage needs attention · Open storage" else "${model.conflicts.size} swim conflicts to review · Open storage", color = MaterialTheme.colorScheme.error)
+                        }
                     }
                     if (model.loading) Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
                     else Box(Modifier.widthIn(max = 1100.dp).fillMaxSize()) {
                         when {
-                            about -> AboutScreen(model, { export.launch("fishyfishy-${LocalDate.now()}.json") }, { restore.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) })
+                            about -> AboutScreen(model, { chooseFolder.launch(model.folderUri?.toUri()) }, { export.launch("fishyfishy-${LocalDate.now()}.json") }, { restore.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) })
                             quiz -> QuizScreen(language, speak)
                             detail != null -> SpeciesScreen(guide.first { it.id == detail }, language, confirmed.contains(detail), speak, { addSwim(detail) })
                             tab == 0 -> ExploreScreen(language, { language = it; prefs.edit().putString("language", it).apply() }, confirmed, model.trips.size, { detail = it }, { addSwim() })
-                            tab == 1 -> JournalScreen(model, { addSwim() }, { editor = it.id; seed = null })
+                            tab == 1 -> JournalScreen(model, { addSwim() }, { model.clearOperationError(); editor = it.id; seed = null })
                             else -> CollectionScreen(confirmed, language, { detail = it }, { quiz = true })
                         }
                     }
@@ -178,8 +202,15 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         }
     }
     if (editor != null) {
-        val existing = model.trips.find { it.id == editor }
-        key(editor) { SwimEditor(existing, seed, language, model.busy, model.loadError, { editor = null }, { model.save(it) { editor = null; detail = null; tab = 1 } }, { trip -> model.delete(trip) { editor = null } }) }
+        key(editor) {
+            // Freeze both the draft's original data and its revision IDs, including across process recreation.
+            val original by rememberSaveable { mutableStateOf(model.trips.find { it.id == editor }?.let { JournalCodec.encode(listOf(it)) }) }
+            val expected by rememberSaveable { mutableStateOf(model.headIds(editor!!).toList()) }
+            val existing = remember(original) { original?.let { JournalCodec.decode(it).single() } }
+            SwimEditor(existing, seed, language, model.busy, model.loadError, model.operationError, { editor = null },
+                { model.save(it, expected.toSet()) { editor = null; detail = null; tab = 1 } },
+                { trip -> model.delete(trip, expected.toSet()) { editor = null } })
+        }
     }
 }
 
@@ -361,7 +392,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                 }
             }
         }
-        item { Text("Your memories stay on this device. Save a backup from the ⓘ menu to take them with you.", color = Muted, fontSize = 12.sp, modifier = Modifier.padding(vertical = 8.dp)) }
+        item { Text("Choose a journal folder in the ⓘ menu to sync your swims between devices with Syncthing.", color = Muted, fontSize = 12.sp, modifier = Modifier.padding(vertical = 8.dp)) }
     }
 }
 @Composable private fun Stat(value: String, label: String, modifier: Modifier) {
@@ -423,15 +454,16 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     }
 }
 
-@Composable private fun AboutScreen(model: JournalModel, export: () -> Unit, restore: () -> Unit) {
+@Composable private fun AboutScreen(model: JournalModel, chooseFolder: () -> Unit, export: () -> Unit, restore: () -> Unit) {
     val context = LocalContext.current
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
         Eyebrow("Made for curious little humans"); Heading("A pocketful\nof ocean wonder.")
         Text("FishyFishy is a snorkeling journal for kids and their grown-ups. Made for discovering the ocean around Madeira, one swim at a time.", color = Muted, lineHeight = 24.sp)
-        FactBlock("Yours, even offline", "No account, ads or tracking. Your swims stay on this device. The photos and guide are included in the app. Read-aloud uses installed offline Android voices.", Icons.Rounded.FavoriteBorder)
-        FactBlock("Keep your memories", "Export a backup before changing phones or uninstalling. Restore adds missing swims; it keeps your current version of swims already on this device.", Icons.Rounded.SaveAlt)
+        FactBlock("Yours, even offline", "No account, ads or tracking. Your swims are saved as files. You choose whether to sync them with another app. The photos and guide are included in the app. Read-aloud uses installed offline Android voices.", Icons.Rounded.FavoriteBorder)
+        StorageSection(model, chooseFolder)
+        FactBlock("Keep your memories", "Export a backup before changing phones or uninstalling. Restore adds missing swims and keeps existing swims and deletions. If you use Syncthing, sync the whole journal folder instead.", Icons.Rounded.SaveAlt)
         Button(onClick = export, enabled = !model.busy && model.loadError == null, modifier = Modifier.fillMaxWidth()) { Text("Export journal backup") }
-        OutlinedButton(onClick = restore, enabled = !model.busy, modifier = Modifier.fillMaxWidth()) { Text("Restore journal backup") }
+        OutlinedButton(onClick = restore, enabled = !model.busy && model.loadError == null, modifier = Modifier.fillMaxWidth()) { Text("Restore journal backup") }
         model.loadError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
         FactBlock("Be a kind ocean visitor", "Explore with a grown-up, give wildlife space, and leave animals and shells where they belong. There is always something new to notice.", Icons.Rounded.Waves)
         Text("About the guide", fontWeight = FontWeight.Bold, fontSize = 22.sp)
@@ -443,8 +475,9 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     }
 }
 
-@Composable private fun SwimEditor(existing: Trip?, seed: String?, language: String, busy: Boolean, loadError: String?, close: () -> Unit, save: (Trip) -> Unit, delete: (Trip) -> Unit) {
+@Composable private fun SwimEditor(existing: Trip?, seed: String?, language: String, busy: Boolean, loadError: String?, operationError: String?, close: () -> Unit, save: (Trip) -> Unit, delete: (Trip) -> Unit) {
     val context = LocalContext.current
+    val draftId by rememberSaveable { mutableStateOf(existing?.id ?: UUID.randomUUID().toString()) }
     var date by rememberSaveable { mutableStateOf(existing?.date ?: LocalDate.now().toString()) }
     var place by rememberSaveable { mutableStateOf(existing?.place ?: "") }
     var duration by rememberSaveable { mutableStateOf(existing?.minutes?.toString() ?: "30") }
@@ -503,10 +536,10 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                     if (guide.none { it.matches(search) }) item { Text("Not in our starter guide? Describe it in your notes below.", color = Muted) }
                     item { OutlinedTextField(notes, { if (it.length <= 10000) notes = it }, label = { Text("A memory to keep") }, placeholder = { Text("A mystery fish? A funny moment? Tell your story…") }, minLines = 3, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), enabled = !busy) }
                     item { Text("${selected.size} creatures selected · ${unsure.size} to check", color = Teal) }
-                    (error ?: loadError)?.let { message -> item { Text(message, color = MaterialTheme.colorScheme.error) } }
+                    (error ?: loadError ?: operationError)?.let { message -> item { Text(message, color = MaterialTheme.colorScheme.error) } }
                 }
                 Button(onClick = {
-                    val trip = Trip(existing?.id ?: UUID.randomUUID().toString(), date, place.trim(), duration.toIntOrNull() ?: 0, notes.trim(), selected.toSet(), unsure.toSet())
+                    val trip = Trip(draftId, date, place.trim(), duration.toIntOrNull() ?: 0, notes.trim(), selected.toSet(), unsure.toSet())
                     try { trip.validate(); error = null; save(trip) } catch (e: Exception) { error = e.message ?: "Please check your swim details." }
                 }, enabled = !busy && loadError == null, modifier = Modifier.widthIn(max = 800.dp).fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp).heightIn(min = 54.dp)) {
                     if (busy) CircularProgressIndicator(Modifier.size(22.dp), color = Color.White, strokeWidth = 2.dp) else { Icon(Icons.Rounded.Check, null); Spacer(Modifier.width(8.dp)); Text("Save our swim") }
@@ -516,4 +549,52 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         if (deleting && existing != null) AlertDialog(onDismissRequest = { deleting = false }, title = { Text("Delete this swim?") }, text = { Text("This removes the swim and its sightings from your journal.") }, confirmButton = { TextButton(onClick = { deleting = false; delete(existing) }) { Text("Delete swim") } }, dismissButton = { TextButton(onClick = { deleting = false }) { Text("Keep it") } })
         if (discarding) AlertDialog(onDismissRequest = { discarding = false }, title = { Text("Leave without saving?") }, text = { Text("Your changes to this swim will be lost.") }, confirmButton = { TextButton(onClick = close) { Text("Discard changes") } }, dismissButton = { TextButton(onClick = { discarding = false }) { Text("Keep writing") } })
     }
+}
+
+@Composable private fun StorageSection(model: JournalModel, chooseFolder: () -> Unit) {
+    var confirmFolder by remember { mutableStateOf(false) }
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Text("Journal storage", fontWeight = FontWeight.Bold, fontSize = 22.sp)
+        Surface(color = Mist, shape = Shell) {
+            Column(Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Icon(Icons.Rounded.FolderOpen, null, tint = Teal)
+                Text(model.folderLabel ?: "App storage · this device only", fontWeight = FontWeight.Bold)
+                Text(if (model.folderUri == null) "Choose a local folder to keep your journal outside the app and sync it between devices." else "Your swims are read and saved directly in this folder. Sync the entire folder with Syncthing, then select its local copy in FishyFishy on each device.", color = Muted, lineHeight = 22.sp)
+                model.lastChecked?.let { Text("Folder last read at $it", color = Muted, fontSize = 12.sp) }
+            }
+        }
+        Button(onClick = { confirmFolder = true }, enabled = !model.busy, modifier = Modifier.fillMaxWidth()) {
+            Text(if (model.folderUri == null) "Choose journal folder" else "Change or reconnect folder")
+        }
+        OutlinedButton(onClick = { model.refresh() }, enabled = !model.busy, modifier = Modifier.fillMaxWidth()) { Text("Refresh journal") }
+        Text("Changes appear when you return to FishyFishy and while it’s open. Let Syncthing finish syncing before editing the same swim on another device. Folder sync is managed by Syncthing, not FishyFishy.", fontSize = 13.sp, color = Muted, lineHeight = 20.sp)
+        model.operationError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+        model.conflicts.forEach { (id, versions) ->
+            Surface(color = Gold.copy(alpha = .2f), shape = Shell) {
+                Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text("Two devices changed a swim", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                    Text("Both versions are safe. Choose the one to keep. Past versions stay in the folder’s history.", color = Muted)
+                    versions.forEachIndexed { index, revision ->
+                        HorizontalDivider()
+                        val trip = revision.trip
+                        if (trip == null) Text("Version ${index + 1}: swim deleted")
+                        else {
+                            Text("Version ${index + 1}: ${trip.place}", fontWeight = FontWeight.Bold)
+                            Text("${trip.date} · ${trip.minutes} min")
+                            Text(guide.filter { it.id in trip.sightings }.joinToString { it.name + if (it.id in trip.uncertain) " (?)" else "" }.ifBlank { "No creatures logged" }, color = Muted)
+                            if (trip.notes.isNotEmpty()) Text(trip.notes)
+                        }
+                        OutlinedButton(onClick = { model.resolve(id, revision, versions.map { it.id }.toSet()) }, enabled = !model.busy && model.loadError == null) {
+                            Text(if (trip == null) "Keep deletion" else "Keep version ${index + 1}")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (confirmFolder) AlertDialog(onDismissRequest = { confirmFolder = false },
+        title = { Text("Choose a folder for your journal") },
+        text = { Text("Create a dedicated local folder such as Documents/FishyFishy. Your current swims and their history will be copied there, alongside any swims already in the folder. The original files stay untouched. Give Syncthing access to the same folder on each device.") },
+        confirmButton = { TextButton(onClick = { confirmFolder = false; chooseFolder() }) { Text("Choose folder") } },
+        dismissButton = { TextButton(onClick = { confirmFolder = false }) { Text("Cancel") } })
 }
