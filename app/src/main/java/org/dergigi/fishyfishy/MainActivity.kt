@@ -3,7 +3,6 @@ package org.dergigi.fishyfishy
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -27,7 +26,6 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.VolumeUp
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -86,25 +84,6 @@ class MainActivity : ComponentActivity() {
 
 private fun Species.display(language: String) = when (language) { "pt" -> portuguese; "de" -> german; else -> name }
 
-@Composable private fun rememberSpeaker(): (String, String) -> Unit {
-    val context = LocalContext.current
-    var engine by remember { mutableStateOf<TextToSpeech?>(null) }
-    var ready by remember { mutableStateOf(false) }
-    DisposableEffect(context) {
-        val tts = TextToSpeech(context) { ready = it == TextToSpeech.SUCCESS }
-        engine = tts
-        onDispose { ready = false; tts.stop(); tts.shutdown(); engine = null }
-    }
-    return { words, language ->
-        val tts = engine
-        val locale = when (language) { "pt" -> Locale.forLanguageTag("pt-PT"); "de" -> Locale.GERMAN; else -> Locale.UK }
-        val voice = if (ready) tts?.voices?.filter { !it.isNetworkConnectionRequired && it.locale.language == locale.language }
-            ?.sortedByDescending { it.locale.country == locale.country }?.firstOrNull() else null
-        if (tts == null || voice == null) Toast.makeText(context, "Install an offline ${locale.getDisplayLanguage(Locale.ENGLISH)} voice in Android's text-to-speech settings to listen.", Toast.LENGTH_LONG).show()
-        else { tts.voice = voice; tts.setSpeechRate(0.85f); tts.speak(words, TextToSpeech.QUEUE_FLUSH, null, "fishy-name") }
-    }
-}
-
 @Composable private fun FishyApp(model: JournalModel = viewModel()) {
     val context = LocalContext.current
     val prefs = remember { context.getSharedPreferences("preferences", 0) }
@@ -123,6 +102,8 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         lifecycle.addObserver(observer)
         onDispose { lifecycle.removeObserver(observer) }
     }
+    LaunchedEffect(foreground) { if (!foreground) speak.stop() }
+    LaunchedEffect(detail, quiz) { speak.stop() }
     LaunchedEffect(foreground, model.folderUri) {
         if (foreground) {
             model.refresh()
@@ -303,7 +284,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     }
 }
 
-@Composable private fun SpeciesScreen(species: Species, language: String, spotted: Boolean, speak: (String, String) -> Unit, add: () -> Unit) {
+@Composable private fun SpeciesScreen(species: Species, language: String, spotted: Boolean, speak: Speaker, add: () -> Unit) {
     val context = LocalContext.current
     val photos = listOf(GuidePhoto(species.image, species.id, species.photoLabel)) + species.otherPhotos
     var photoIndex by rememberSaveable(species.id) { mutableStateOf(0) }
@@ -332,7 +313,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                     listOf(Triple("English", species.name, "en"), Triple("Português", species.portuguese, "pt"), Triple("Deutsch", species.german, "de")).forEach { (label, name, code) ->
                         Row(Modifier.fillMaxWidth().padding(top = 10.dp), verticalAlignment = Alignment.CenterVertically) {
                             Column(Modifier.weight(1f)) { Text(label, fontSize = 11.sp, color = Muted); Text(name, fontWeight = FontWeight.SemiBold, fontSize = 17.sp) }
-                            IconButton(onClick = { speak(name, code) }) { Icon(Icons.AutoMirrored.Rounded.VolumeUp, "Listen in $label", tint = Teal) }
+                            SpeakButton(speak, name, code, "Listen in $label")
                         }
                     }
                     Text("Scientific · ${species.scientific}", color = Muted, fontStyle = FontStyle.Italic, modifier = Modifier.padding(top = 14.dp))
@@ -349,7 +330,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         item {
             Surface(color = Mist, shape = Shell) {
                 Column(Modifier.padding(22.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) { Eyebrow("Little ocean lesson"); Spacer(Modifier.weight(1f)); IconButton(onClick = { speak(species.fact, "en") }) { Icon(Icons.AutoMirrored.Rounded.VolumeUp, "Read this fact in English") } }
+                    Row(verticalAlignment = Alignment.CenterVertically) { Eyebrow("Little ocean lesson"); Spacer(Modifier.weight(1f)); SpeakButton(speak, species.fact, "en", "Read this fact in English") }
                     Text(species.fact, fontFamily = FontFamily.Serif, fontSize = 23.sp, lineHeight = 30.sp)
                 }
             }
@@ -440,7 +421,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     }
 }
 
-@Composable private fun QuizScreen(language: String, speak: (String, String) -> Unit) {
+@Composable private fun QuizScreen(language: String, speak: Speaker) {
     var question by rememberSaveable { mutableStateOf(guide.random().id) }
     var options by rememberSaveable { mutableStateOf((guide.filterNot { it.id == question }.shuffled().take(3).map { it.id } + question).shuffled()) }
     var answered by rememberSaveable { mutableStateOf<String?>(null) }
@@ -450,7 +431,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         Image(painterResource(fish.image), "Mystery sea creature. Choose its name below.", Modifier.fillMaxWidth().heightIn(max = 400.dp).aspectRatio(1.4f).clip(Shell), contentScale = ContentScale.Crop)
         options.forEach { id ->
             val option = guide.first { it.id == id }
-            OutlinedButton(onClick = { answered = id; speak(option.display(language), language) }, enabled = answered == null,
+            OutlinedButton(onClick = { answered = id; speak.speak(option.display(language), language) }, enabled = answered == null,
                 modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp), colors = ButtonDefaults.outlinedButtonColors(disabledContainerColor = if (answered != null && id == question) Mist else Color.Transparent, disabledContentColor = Ink)) {
                 if (answered != null && id == question) { Icon(Icons.Rounded.Check, null); Spacer(Modifier.width(8.dp)) }
                 Text(option.display(language))

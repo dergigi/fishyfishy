@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Speech buttons immediately show Starting and Playing feedback and ignore repeated taps on the active name or lesson.
+- Speech waits for engine initialization, handles errors and timeouts, and stops when leaving the screen or backgrounding the app.
+
 ## [0.3.0] - 2026-09-19
 
 ### Added
