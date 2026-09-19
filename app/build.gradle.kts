@@ -14,6 +14,7 @@ val canSign = signingKeys.all { !signingValue(it).isNullOrBlank() }
 android {
     namespace = "org.dergigi.fishyfishy"
     compileSdk = 35
+    buildToolsVersion = "35.0.0"
     defaultConfig {
         applicationId = "org.dergigi.fishyfishy"
         minSdk = 26
