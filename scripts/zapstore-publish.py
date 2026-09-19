@@ -6,6 +6,7 @@ file can be supplied with --env-file, e.g. an existing publisher's configuration
 Secrets are passed only in the subprocess environment, never command arguments.
 """
 import argparse
+import json
 import os
 from pathlib import Path
 import shutil
@@ -63,4 +64,14 @@ if not apk.exists():
     raise SystemExit('Build :app:assembleRelease before publishing.')
 publisher = next(line.split(':', 1)[1].strip() for line in (root / 'zapstore.yaml').read_text().splitlines() if line.startswith('pubkey:'))
 subprocess.run(['zsp', 'identity', '--verify', str(apk), '--relays', 'wss://relay.zapstore.dev'], input=publisher + '\n', text=True, env=env, cwd=root, check=True)
-subprocess.run(['zsp', 'publish', 'zapstore.yaml', '--quiet', '--skip-preview', '--skip-certificate-linking'], env=env, cwd=root, check=True)
+# Publish this exact verified APK. Keep the committed metadata and changelog,
+# without depending on GitHub's API to fetch an artifact already on disk.
+config = (root / 'zapstore.yaml').read_text()
+config = config.replace('release_notes: ./CHANGELOG.md', 'release_notes: ' + json.dumps(str(root / 'CHANGELOG.md')))
+config = config.replace('icon: ./zapstore-icon.png', 'icon: ' + json.dumps(str(root / 'zapstore-icon.png')))
+config += '\nrelease_source: ' + json.dumps(str(apk)) + '\n'
+with tempfile.TemporaryDirectory(prefix='fishyfishy-publish-') as directory:
+    publish_config = Path(directory) / 'zapstore.yaml'
+    publish_config.write_text(config)
+    subprocess.run(['zsp', 'publish', str(publish_config), '--quiet', '--skip-preview',
+                    '--skip-certificate-linking', '--skip-metadata'], env=env, cwd=root, check=True)
