@@ -45,7 +45,7 @@ internal class SpeechRequests {
     fun clear() { active = null }
 }
 
-internal class Speaker(private val context: Context, private val scope: CoroutineScope) {
+internal class Speaker(private val context: Context, private val scope: CoroutineScope, private val strings: AppStrings) {
     val requests = SpeechRequests()
     private val handler = Handler(Looper.getMainLooper())
     private val initialized = CompletableDeferred<Boolean>()
@@ -81,7 +81,7 @@ internal class Speaker(private val context: Context, private val scope: Coroutin
                         ?.sortedByDescending { it.locale.country == locale.country }?.firstOrNull()
                 }
                 if (voice == null) {
-                    fail(request.id, "Install an offline ${locale.getDisplayLanguage(Locale.ENGLISH)} voice in Android's text-to-speech settings to listen.")
+                    fail(request.id, strings("Install an offline %s voice in Android's text-to-speech settings to listen.", locale.getDisplayLanguage(strings.locale)))
                     return@launch
                 }
                 if (requests.active?.id != request.id) return@launch
@@ -103,23 +103,25 @@ internal class Speaker(private val context: Context, private val scope: Coroutin
         }
     }
     private fun fail(id: String, message: String) {
-        if (!closed && requests.finish(id)) Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        if (!closed && requests.finish(id)) Toast.makeText(context, strings(message), Toast.LENGTH_LONG).show()
     }
     fun stop() { job?.cancel(); requests.clear(); engine.stop() }
     fun close() { closed = true; stop(); engine.shutdown() }
 }
 
 @Composable internal fun rememberSpeaker(): Speaker {
+    val strings = LocalStrings.current
     val context = LocalContext.current.applicationContext
     val scope = rememberCoroutineScope()
-    val speaker = remember(context, scope) { Speaker(context, scope) }
+    val speaker = remember(context, scope, strings) { Speaker(context, scope, strings) }
     DisposableEffect(speaker) { onDispose { speaker.close() } }
     return speaker
 }
 
 @Composable internal fun SpeakButton(speaker: Speaker, words: String, language: String, description: String) {
+    val strings = LocalStrings.current
     val active = speaker.requests.active?.takeIf { it.words == words && it.language == language }
-    val label = when { active == null -> "Listen"; active.playing -> "Playing…"; else -> "Starting…" }
+    val label = when { active == null -> strings("Listen"); active.playing -> strings("Playing…"); else -> strings("Starting…") }
     IconButton(
         onClick = { speaker.speak(words, language) }, enabled = active == null,
         modifier = Modifier.semantics {

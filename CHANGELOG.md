@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- A flag dropdown beside Info to switch the entire app between English, Portuguese and German, including guide lessons, clues, dates and read-aloud.
+- German and Portuguese YouTube selections that follow the app language, with related species and broader habitats labelled.
 - Light and dark appearance that follows the device’s system theme, including cards, controls and the swim date picker.
 
 ## [0.4.0] - 2026-09-19

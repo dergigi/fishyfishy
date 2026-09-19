@@ -29,6 +29,7 @@ import kotlin.math.min
 
 @Composable
 fun PhotoViewer(photo: GuidePhoto, title: String, credit: String, dismiss: () -> Unit) {
+    val strings = LocalStrings.current
     val painter = painterResource(photo.image)
     var scale by remember(photo.image) { mutableFloatStateOf(1f) }
     var offset by remember(photo.image) { mutableStateOf(Offset.Zero) }
@@ -51,7 +52,7 @@ fun PhotoViewer(photo: GuidePhoto, title: String, credit: String, dismiss: () ->
         Column(Modifier.fillMaxSize().background(Color.Black).safeDrawingPadding()) {
             Row(Modifier.fillMaxWidth().padding(start = 16.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text("$title · ${photo.label}", color = Color.White, modifier = Modifier.weight(1f))
-                IconButton(onClick = dismiss) { Icon(Icons.Rounded.Close, "Close photo", tint = Color.White) }
+                IconButton(onClick = dismiss) { Icon(Icons.Rounded.Close, strings("Close photo"), tint = Color.White) }
             }
             Box(Modifier.weight(1f).fillMaxWidth().clipToBounds()
                 .onSizeChanged { viewport = it; offset = bounded(offset, scale) }
@@ -68,14 +69,14 @@ fun PhotoViewer(photo: GuidePhoto, title: String, credit: String, dismiss: () ->
             }
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { zoomTo(scale / 1.5f) }, enabled = scale > 1f) {
-                    Icon(Icons.Rounded.ZoomOut, "Zoom out", tint = if (scale > 1f) Color.White else Color.Gray)
+                    Icon(Icons.Rounded.ZoomOut, strings("Zoom out"), tint = if (scale > 1f) Color.White else Color.Gray)
                 }
-                TextButton(onClick = { zoomTo(1f) }) { Text("Reset", color = Color.White) }
+                TextButton(onClick = { zoomTo(1f) }) { Text(strings("Reset"), color = Color.White) }
                 IconButton(onClick = { zoomTo(scale * 1.5f) }, enabled = scale < 6f) {
-                    Icon(Icons.Rounded.ZoomIn, "Zoom in", tint = if (scale < 6f) Color.White else Color.Gray)
+                    Icon(Icons.Rounded.ZoomIn, strings("Zoom in"), tint = if (scale < 6f) Color.White else Color.Gray)
                 }
             }
-            Text("Pinch to zoom · Drag to explore · Double-tap to zoom", color = Color.LightGray, style = MaterialTheme.typography.labelSmall, modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 12.dp))
+            Text(strings("Pinch to zoom · Drag to explore · Double-tap to zoom"), color = Color.LightGray, style = MaterialTheme.typography.labelSmall, modifier = Modifier.align(Alignment.CenterHorizontally).padding(horizontal = 12.dp))
             Text(credit, color = Color.LightGray, style = MaterialTheme.typography.labelSmall, modifier = Modifier.padding(12.dp))
         }
     }

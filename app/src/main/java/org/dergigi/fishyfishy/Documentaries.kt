@@ -1,6 +1,7 @@
 package org.dergigi.fishyfishy
 
-data class GuideFilm(val videoId: String, val title: String, val publisher: String, val topic: String, val note: String) {
+data class GuideFilm(val videoId: String, val title: String, val publisher: String, val topic: String, val note: String, val language: String = "en") {
+    val languageLabel: String get() = when (language) { "de" -> "Deutsch"; "pt" -> "Português · texto no ecrã"; else -> "English" }
     val url: String get() = "https://www.youtube.com/watch?v=$videoId"
 }
 
@@ -48,4 +49,12 @@ val guideFilms: Map<String, GuideFilm> = buildMap {
     listOf("wrasse", "salema", "bream", "zebra", "damselfish", "comber", "grouper", "chromis", "azores_chromis", "saddled", "two_banded", "mullet", "goatfish", "lizardfish", "triplefin", "redlip", "scorpionfish", "black_moray", "moray", "trumpetfish", "triggerfish", "barracuda", "sand_bream", "fireworm", "limpet").forEach { id ->
         put(id, GuideFilm("jVn8ZXaditg", "The Gorgeous Wildlife of the Mediterranean | Free Documentary Nature", "Free Documentary - Nature", "Coastal habitat", "Explore Mediterranean coastal habitats and compare them with Madeira’s rocky shores. This longer documentary is filmed outside Madeira."))
     }
+}
+
+
+/** Select only films in the requested language; never silently fall back to English. */
+fun filmFor(speciesId: String, language: String): GuideFilm? = when (language) {
+    "de" -> germanFilms[speciesId]
+    "pt" -> portugueseFilms[speciesId]
+    else -> guideFilms[speciesId]
 }

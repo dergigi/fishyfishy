@@ -113,7 +113,7 @@ class JournalModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try { accept(withContext(Dispatchers.IO) { action() }); message = success; done() }
             catch (e: Exception) {
-                operationError = if (e is IllegalArgumentException) e.message else "Couldn't save to your journal folder. Your draft and existing files are kept. Check storage and try again."
+                operationError = if (e is IllegalArgumentException) e.message ?: "Please check the file or storage and try again." else "Couldn't save to your journal folder. Your draft and existing files are kept. Check storage and try again."
                 message = operationError
             } finally { busy = false }
         }

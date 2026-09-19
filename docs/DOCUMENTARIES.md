@@ -24,3 +24,55 @@ Every guide entry has a link. Short documentary clips and science films are pref
 No video, audio or YouTube thumbnail is downloaded into the app. The app retains no network permission; tapping the link opens YouTube or the browser. Video rights remain with their publishers.
 
 Supporting publisher pages: [BBC Earth selection](https://www.bbcearth.com/news/the-top-50-natural-history-moments), [PBS pufferfish clip](https://www.pbs.org/wnet/nature/pufferfish-builds-sand-castle-for-mating/29367/), [KQED decorator crabs](https://www.kqed.org/science/1648112/behind-the-scenes-with-deep-look-the-diva-decorator-crabs).
+
+## Language-specific selections (0.5.0)
+
+The app selects a separate film map for each interface language. German and
+Portuguese never fall back to an English video. Titles may be shortened for the
+card; publisher names and the original YouTube titles remain on YouTube.
+
+German selections:
+
+| Video | Publisher | Used for |
+| --- | --- | --- |
+| [Unterwasserkino für den Oktopus](https://www.youtube.com/watch?v=1PKNtvm4qTg) | Wilde Tierwelt / BR | Octopus |
+| [Abtauchen in die Seegraswiese](https://www.youtube.com/watch?v=QJDBrXvpQPo) | Wilde Tierwelt / BR | Salema, sand steenbras, cuttlefish, sand smelt, bogue; habitat comparison |
+| [Meeresfische](https://www.youtube.com/watch?v=sTWZA3ogLr8) | Wilde Tierwelt / BR | Cleaner shrimp and anemones; aquarium relatives |
+| [Das älteste Meeresschutzgebiet Europas](https://www.youtube.com/watch?v=Odeulw4kQS0) | ARTE Fernweh | Other entries; broader Port-Cros coastal habitat |
+
+These are German-language programmes, not English videos with translated link
+labels. Publisher descriptions and YouTube player metadata were checked on
+2026-09-19. The octopus episode is also documented by its participating research
+organisation [MareMundi](https://mare-mundi.org/nina-und-die-wilden-tiere/) and
+[BR/ARD](https://www.ardmediathek.de/video/anna-nina-pia-und-die-wilden-tiere/unterwasserkino-fuer-den-oktopus/br/Y3JpZDovL2JyLmRlL2Jyb2FkY2FzdC9hOTAyMWU1OS0zMDRiLTQyZTEtOTBhOS0yZjg5MzlmMzcyMjZfb25saW5lYnJvYWRjYXN0).
+The [ARTE series page](https://www.arte.tv/de/videos/RC-023845/fragile-schoenheit-mittelmeer/)
+provides the Port-Cros programme's context.
+
+Portuguese selections come from the University of São Paulo's marine biology
+centre, CEBIMar. Its [official series description](https://cebimar.usp.br/divulgacao/artigo-chega-ao-fim-a-serie-brasil-debaixo-dagua-30-segundos-por-dia/)
+links to the [Brasil debaixo d’água playlist](https://www.youtube.com/playlist?list=PL7qks14c2RedTP97kMpbl1b7d0asOsD1f).
+These are short educational films with Portuguese on-screen text and music,
+not dubbed English documentaries. The card explicitly labels on-screen text.
+Brazilian species and habitats are presented as comparisons with Madeira;
+similar Portuguese common names do not imply identical species.
+
+| Video | Used for |
+| --- | --- |
+| [Polvo-comum](https://www.youtube.com/watch?v=k0ncnGX8MgQ) | Octopus, cuttlefish comparison |
+| [Esponja-tubular-amarela](https://www.youtube.com/watch?v=tH6aN2oTJag) | Sponge; Aplysina fistularis, not A. aerophoba |
+| [Sardinha](https://www.youtube.com/watch?v=G62e-HbdCQE) | Sardine, bogue, sand smelt; Sardinella brasiliensis |
+| [Camarão-limpador-branco](https://www.youtube.com/watch?v=O8bLjd0CtkE) | Cleaner shrimp; Ancylomenes pedersoni |
+| [Peixe-papagaio-vermelho](https://www.youtube.com/watch?v=Hu8dCM62Ekk) | Parrotfish; Sparisoma tuiupiranga |
+| [Moreia-pintada](https://www.youtube.com/watch?v=xdJ26AeOOKs) | Morays; Gymnothorax moringa |
+| [Anémona-de-tubo](https://www.youtube.com/watch?v=piBLLU2cODo) | Anemones; related tube anemone |
+| [Peixe-porco-pintado](https://www.youtube.com/watch?v=2O8paieEZKI) | Triggerfish; related filefish Cantherhines macrocerus |
+| [Badejo-ferro](https://www.youtube.com/watch?v=B9_fCZyC49Y) | Grouper and comber relatives |
+| [Poliqueta-árvore-de-natal](https://www.youtube.com/watch?v=WpDPK4ZsPZk) | Fireworm; related tube-dwelling worm |
+| [Peixes nas algas](https://www.youtube.com/watch?v=f5YJpfw6mgU) | Other coastal fish; habitat comparison |
+| [Banco de rodolitos](https://www.youtube.com/watch?v=9xDGw0Oyge4) | Other critters; broader seabed habitat |
+
+All 16 new video IDs returned matching publisher metadata and an OK YouTube
+player status on 2026-09-19. Descriptions and sample Portuguese video frames
+were checked, but these checks are not a full audiovisual or age-rating review.
+Availability, region restrictions, adverts and recommendations remain controlled
+by YouTube. No videos or remote thumbnails are embedded in the offline guide.
