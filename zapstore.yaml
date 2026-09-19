@@ -1,0 +1,28 @@
+repository: https://github.com/dergigi/fishyfishy
+pubkey: npub1dergggklka99wwrs92yz8wdjs952h2ux2ha2ed598ngwu9w7a6fsh9xzpc
+release_notes: ./CHANGELOG.md
+name: FishyFishy
+summary: A little journal for big underwater discoveries
+description: |
+  Explore Madeira's ocean life with your little snorkeler.
+
+  A visual, offline field guide to 12 fish and ocean creatures, with English,
+  Portuguese, German and scientific names. Hear names spoken aloud using
+  installed offline voices, learn a little ocean fact, and play a photo quiz.
+
+  Save your swims, remember what you saw, and grow your own discovery collection.
+  Mark uncertain sightings to check together later. Export and restore your journal.
+
+  Built for Android phones and tablets. No accounts, ads, tracking or internet
+  permission. Interface and lessons are in English. Free and open source.
+tags:
+  - snorkeling
+  - nature
+  - education
+  - offline
+  - kids
+  - madeira
+license: MIT
+icon: ./zapstore-icon.png
+metadata_sources:
+  - github

@@ -40,7 +40,12 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
     buildFeatures { compose = true }
-    lint { abortOnError = true }
+    lint {
+        abortOnError = true
+        // Lifecycle 2.9's LiveData detector crashes with AGP 8.7's Kotlin analysis.
+        // Same workaround as Boris; this app uses Compose state, not LiveData.
+        disable += "NullSafeMutableLiveData"
+    }
 }
 dependencies {
     implementation(libs.androidx.core.ktx)
