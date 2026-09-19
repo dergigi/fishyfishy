@@ -308,14 +308,18 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     val photos = listOf(GuidePhoto(species.image, species.id, species.photoLabel)) + species.otherPhotos
     var photoIndex by rememberSaveable(species.id) { mutableStateOf(0) }
     val photo = photos[photoIndex.coerceIn(photos.indices)]
+    var showPhoto by rememberSaveable(species.id) { mutableStateOf(false) }
     val credits = remember(photo.creditId) {
         val all = JSONArray(context.assets.open("photo-credits.json").bufferedReader().use { it.readText() })
         (0 until all.length()).map { all.getJSONObject(it) }.first { it.getString("id") == photo.creditId }
     }
+    if (showPhoto) PhotoViewer(photo, species.display(language),
+        "${credits.getString("author")} · ${credits.getString("license")}") { showPhoto = false }
     LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
         item {
-            Image(painterResource(photo.image), "${species.name}: ${photo.label}", Modifier.fillMaxWidth().heightIn(max = 430.dp).aspectRatio(1.4f).clip(Shell), contentScale = ContentScale.Crop)
+            Image(painterResource(photo.image), "${species.name}: ${photo.label}", Modifier.fillMaxWidth().heightIn(max = 430.dp).aspectRatio(1.4f).clip(Shell).clickable(onClickLabel = "Open photo to zoom") { showPhoto = true }, contentScale = ContentScale.Crop)
         }
+        item { Text("Tap the photo to zoom in", color = Muted, fontSize = 12.sp) }
         item {
             Eyebrow(if (spotted) "A familiar face · spotted by you" else if (species.comparisonNote != null) "A lookalike to compare" else "Meet a Madeira neighbour")
             Spacer(Modifier.height(9.dp)); Heading(species.display(language))

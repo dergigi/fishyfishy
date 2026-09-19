@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Open guide photos full-screen with pinch zoom, panning, double-tap zoom and accessible zoom/reset controls.
+
 ## [0.2.0] - 2026-09-19
 
 ### Added
