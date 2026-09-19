@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Watch together cards on creature details, linking directly to 14 selected YouTube documentaries and short science films across all 47 guide entries.
+- Film titles, publishers and clear labels for related animals or broader coastal habitats.
+
 ## [0.3.2] - 2026-09-19
 
 ### Changed

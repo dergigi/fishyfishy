@@ -337,6 +337,29 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         }
         item { FactBlock("Where to look", species.habitat, Icons.Rounded.Waves) }
         item { FactBlock("Your explorer mission", species.mission, Icons.Rounded.AutoAwesome) }
+        guideFilms[species.id]?.let { film ->
+            item {
+                Surface(color = Mist, shape = Shell) {
+                    Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            Icon(Icons.Rounded.PlayCircle, null, tint = Teal, modifier = Modifier.size(36.dp))
+                            Column { Eyebrow("Watch together"); Text("${film.publisher} · English", color = Muted, fontSize = 12.sp) }
+                        }
+                        Text(film.title, fontWeight = FontWeight.Bold, fontSize = 19.sp, lineHeight = 25.sp)
+                        Text(film.topic, color = Teal, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+                        Text(film.note, color = Muted, lineHeight = 22.sp)
+                        FilledTonalButton(onClick = {
+                            speak.stop()
+                            try { context.startActivity(Intent(Intent.ACTION_VIEW, film.url.toUri())) }
+                            catch (_: android.content.ActivityNotFoundException) {
+                                Toast.makeText(context, "Install YouTube or a browser to watch this film.", Toast.LENGTH_LONG).show()
+                            }
+                        }) { Icon(Icons.Rounded.PlayArrow, null); Spacer(Modifier.width(8.dp)); Text("Watch on YouTube ↗") }
+                        Text("Opens YouTube or your browser · Internet needed", color = Muted, fontSize = 11.sp)
+                    }
+                }
+            }
+        }
         item { Button(onClick = add, modifier = Modifier.fillMaxWidth().heightIn(min = 54.dp)) { Icon(Icons.Rounded.Add, null); Spacer(Modifier.width(8.dp)); Text("Log a swim with this creature") } }
         item {
             Text("Not sure? Keep it as a possible sighting. Never touch, chase or feed wildlife.", color = Muted, fontSize = 13.sp)

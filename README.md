@@ -26,6 +26,7 @@ Requires JDK 17 and Android SDK 35.
 - Log a swim's date, location, duration, notes and sightings; mark guesses as uncertain.
 - Revisit, edit and delete swims; grow a collection of confirmed discoveries.
 - Play a gentle photo identification game together.
+- Open a related documentary on YouTube from each creature page; broader habitat films are labelled clearly. See [film selections](docs/DOCUMENTARIES.md).
 - Choose a journal folder and sync it between devices with Syncthing; resolve simultaneous edits in the app.
 - Compare young and adult fish photos; tap to open full-screen and pinch or double-tap to zoom.
 - Find sandy-bottom fish, shells and many-legged critters with visual clue filters.
@@ -37,7 +38,7 @@ Android 8.0 or newer. Phone layouts use bottom navigation; wider tablet windows 
 
 No network permission, analytics, account, GPS access or advertising. Choose a local folder in Info → Journal storage to keep all journal data on the filesystem and sync it with Syncthing. See [folder setup and conflict handling](docs/STORAGE.md). Until a folder is selected, the journal stays in app-private storage. Android automatic backup is disabled; preserve your chosen folder or export a backup before uninstalling. Backups contain swim locations and notes, so save them somewhere appropriate. Restoring adds missing swim IDs and retains existing local edits.
 
-The app requests only offline text-to-speech voices. Voice availability depends on the device. Source links open in the user's browser only when tapped.
+The app requests only offline text-to-speech voices. Voice availability depends on the device. Source links open in the user's browser only when tapped. Documentary links open YouTube or a browser and require internet there; the guide and journal remain offline.
 
 ## Sources and image licences
 
