@@ -6,7 +6,10 @@ import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.widget.Toast
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.VolumeUp
 import androidx.compose.material3.*
@@ -20,7 +23,6 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.*
 import java.util.Locale
 
@@ -118,11 +120,32 @@ internal class Speaker(private val context: Context, private val scope: Coroutin
 @Composable internal fun SpeakButton(speaker: Speaker, words: String, language: String, description: String) {
     val active = speaker.requests.active?.takeIf { it.words == words && it.language == language }
     val label = when { active == null -> "Listen"; active.playing -> "Playing…"; else -> "Starting…" }
-    Column(Modifier.widthIn(min = 72.dp).semantics(mergeDescendants = true) { contentDescription = description; stateDescription = label; liveRegion = LiveRegionMode.Polite }, horizontalAlignment = Alignment.CenterHorizontally) {
-        IconButton(onClick = { speaker.speak(words, language) }, enabled = active == null) {
-            if (active != null && !active.playing) CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
-            else Icon(Icons.AutoMirrored.Rounded.VolumeUp, null, tint = MaterialTheme.colorScheme.primary)
+    IconButton(
+        onClick = { speaker.speak(words, language) }, enabled = active == null,
+        modifier = Modifier.semantics {
+            contentDescription = description
+            stateDescription = label
+            liveRegion = LiveRegionMode.Polite
+        },
+    ) {
+        when {
+            active == null -> Icon(Icons.AutoMirrored.Rounded.VolumeUp, null, tint = MaterialTheme.colorScheme.primary)
+            !active.playing -> CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
+            else -> SpeakingIcon()
         }
-        Text(label, fontSize = 11.sp, color = MaterialTheme.colorScheme.primary)
+    }
+}
+
+@Composable private fun SpeakingIcon() {
+    val animation = rememberInfiniteTransition(label = "Speaking")
+    Row(Modifier.size(24.dp), horizontalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically) {
+        repeat(3) { index ->
+            val height by animation.animateFloat(
+                initialValue = 6f, targetValue = 22f,
+                animationSpec = infiniteRepeatable(tween(450), RepeatMode.Reverse, StartOffset(index * 150)),
+                label = "Sound bar $index",
+            )
+            Box(Modifier.width(4.dp).height(height.dp).background(MaterialTheme.colorScheme.primary, RoundedCornerShape(2.dp)))
+        }
     }
 }
