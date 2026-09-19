@@ -1,5 +1,15 @@
 [
   {
+    "id": "arrow_crab",
+    "file": "Stenorhynchus lanceolatus.jpg",
+    "author": "Jean-Paul Boerekamps",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Stenorhynchus_lanceolatus.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Stenorhynchus_lanceolatus.jpg/1280px-Stenorhynchus_lanceolatus.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
     "id": "azores_chromis",
     "file": "Fula blanca (Chromis limbata), franja marina Teno-Rasca, Tenerife, España, 2022-01-09, DD 13.jpg",
     "author": "Diego Delso",
@@ -7,6 +17,36 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Fula_blanca_(Chromis_limbata),_franja_marina_Teno-Rasca,_Tenerife,_Espa%C3%B1a,_2022-01-09,_DD_13.jpg",
     "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Fula_blanca_%28Chromis_limbata%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-09%2C_DD_13.jpg/1280px-Fula_blanca_%28Chromis_limbata%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-09%2C_DD_13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "barracuda",
+    "file": "Bicuda (Sphyraena viridensis), franja marina Teno-Rasca, Tenerife, España, 2022-01-08, DD 40.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bicuda_(Sphyraena_viridensis),_franja_marina_Teno-Rasca,_Tenerife,_Espa%C3%B1a,_2022-01-08,_DD_40.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Bicuda_%28Sphyraena_viridensis%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-08%2C_DD_40.jpg/1280px-Bicuda_%28Sphyraena_viridensis%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-08%2C_DD_40.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "black_moray",
+    "file": "Morenas negras (Muraena augusti), franja marina Teno-Rasca, Tenerife, España, 2022-01-09, DD 52.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Morenas_negras_(Muraena_augusti),_franja_marina_Teno-Rasca,_Tenerife,_Espa%C3%B1a,_2022-01-09,_DD_52.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Morenas_negras_%28Muraena_augusti%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-09%2C_DD_52.jpg/1280px-Morenas_negras_%28Muraena_augusti%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-09%2C_DD_52.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "black_urchin",
+    "file": "Arbacia lixula (oursin noir).JPG",
+    "author": "Frédéric Ducarme",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Arbacia_lixula_(oursin_noir).JPG",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/54/Arbacia_lixula_%28oursin_noir%29.JPG/1280px-Arbacia_lixula_%28oursin_noir%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {
@@ -50,6 +90,26 @@
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {
+    "id": "cleaner_shrimp",
+    "file": "Lysmata grabhami1.jpg",
+    "author": "Fernando Herranz Martín",
+    "license": "CC BY-SA 2.5 es",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5/es/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Lysmata_grabhami1.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Lysmata_grabhami1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "club_anemone",
+    "file": "Anémona (Telmatactis cricoides), franja marina Teno-Rasca, Tenerife, España, 2022-01-05, DD 117.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:An%C3%A9mona_(Telmatactis_cricoides),_franja_marina_Teno-Rasca,_Tenerife,_Espa%C3%B1a,_2022-01-05,_DD_117.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/An%C3%A9mona_%28Telmatactis_cricoides%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-05%2C_DD_117.jpg/1280px-An%C3%A9mona_%28Telmatactis_cricoides%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-05%2C_DD_117.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
     "id": "comber",
     "file": "Serrano imperial (Serranus atricauda), franja marina Teno-Rasca, Tenerife, España, 2022-01-06, DD 67.jpg",
     "author": "Diego Delso",
@@ -90,6 +150,26 @@
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {
+    "id": "fireworm",
+    "file": "Gusano de fuego (Hermodice carunculata), Madeira, Portugal, 2019-05-31, DD 45.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Gusano_de_fuego_(Hermodice_carunculata),_Madeira,_Portugal,_2019-05-31,_DD_45.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Gusano_de_fuego_%28Hermodice_carunculata%29%2C_Madeira%2C_Portugal%2C_2019-05-31%2C_DD_45.jpg/1280px-Gusano_de_fuego_%28Hermodice_carunculata%29%2C_Madeira%2C_Portugal%2C_2019-05-31%2C_DD_45.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "goatfish",
+    "file": "Salmonete de roca (Mullus surmuletus), Madeira, Portugal, 2019-05-31, DD 55.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Salmonete_de_roca_(Mullus_surmuletus),_Madeira,_Portugal,_2019-05-31,_DD_55.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Salmonete_de_roca_%28Mullus_surmuletus%29%2C_Madeira%2C_Portugal%2C_2019-05-31%2C_DD_55.jpg/1280px-Salmonete_de_roca_%28Mullus_surmuletus%29%2C_Madeira%2C_Portugal%2C_2019-05-31%2C_DD_55.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
     "id": "grouper",
     "file": "Mero_(Epinephelus_marginatus),_Cabo_de_Palos,_España,_2022-07-15,_DD_34.jpg",
     "author": "Diego Delso",
@@ -97,6 +177,66 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Mero_(Epinephelus_marginatus),_Cabo_de_Palos,_Espa%C3%B1a,_2022-07-15,_DD_34.jpg",
     "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/Mero_%28Epinephelus_marginatus%29%2C_Cabo_de_Palos%2C_Espa%C3%B1a%2C_2022-07-15%2C_DD_34.jpg/1280px-Mero_%28Epinephelus_marginatus%29%2C_Cabo_de_Palos%2C_Espa%C3%B1a%2C_2022-07-15%2C_DD_34.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "hermit_crab",
+    "file": "Calcinus tubularis 1.jpg",
+    "author": "Federico Stefanelli (nelli federico)",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Calcinus_tubularis_1.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Calcinus_tubularis_1.jpg/1280px-Calcinus_tubularis_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "limpet",
+    "file": "Patella aspera 01.JPG",
+    "author": "Llez",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Patella_aspera_01.JPG",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Patella_aspera_01.JPG/1280px-Patella_aspera_01.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "lizardfish",
+    "file": "Pez lagarto rayado (Synodus saurus), franja marina Teno-Rasca, Tenerife, España, 2022-01-08, DD 51.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Pez_lagarto_rayado_(Synodus_saurus),_franja_marina_Teno-Rasca,_Tenerife,_Espa%C3%B1a,_2022-01-08,_DD_51.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Pez_lagarto_rayado_%28Synodus_saurus%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-08%2C_DD_51.jpg/1280px-Pez_lagarto_rayado_%28Synodus_saurus%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-08%2C_DD_51.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "moray",
+    "file": "Morena del Mediterráneo (Muraena helena), Regga, Gozo, Malta, 2021-08-23, DD 14.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Morena_del_Mediterr%C3%A1neo_(Muraena_helena),_Regga,_Gozo,_Malta,_2021-08-23,_DD_14.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Morena_del_Mediterr%C3%A1neo_%28Muraena_helena%29%2C_Regga%2C_Gozo%2C_Malta%2C_2021-08-23%2C_DD_14.jpg/1280px-Morena_del_Mediterr%C3%A1neo_%28Muraena_helena%29%2C_Regga%2C_Gozo%2C_Malta%2C_2021-08-23%2C_DD_14.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "mullet",
+    "file": "Liza aurata Corsica.jpg",
+    "author": "Etrusko25",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Liza_aurata_Corsica.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Liza_aurata_Corsica.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "nimble_crab",
+    "file": "Percnon gibbesi Linosa 053.jpg",
+    "author": "tato grasso",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Percnon_gibbesi_Linosa_053.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Percnon_gibbesi_Linosa_053.jpg/1280px-Percnon_gibbesi_Linosa_053.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {
@@ -120,6 +260,56 @@
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {
+    "id": "puffer",
+    "file": "Pez globo ajedrez (Sphoeroides marmoratus), franja marina Teno-Rasca, Tenerife, España, 2022-01-05, DD 68.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Pez_globo_ajedrez_(Sphoeroides_marmoratus),_franja_marina_Teno-Rasca,_Tenerife,_Espa%C3%B1a,_2022-01-05,_DD_68.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Pez_globo_ajedrez_%28Sphoeroides_marmoratus%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-05%2C_DD_68.jpg/1280px-Pez_globo_ajedrez_%28Sphoeroides_marmoratus%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-05%2C_DD_68.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "purple_urchin",
+    "file": "Paracentrotus lividus profil.JPG",
+    "author": "Frédéric Ducarme",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Paracentrotus_lividus_profil.JPG",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Paracentrotus_lividus_profil.JPG/1280px-Paracentrotus_lividus_profil.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "redlip",
+    "file": "Blénidos (Ophioblennius atlanticus), franja marina Teno-Rasca, Tenerife, España, 2022-01-09, DD 29.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bl%C3%A9nidos_(Ophioblennius_atlanticus),_franja_marina_Teno-Rasca,_Tenerife,_Espa%C3%B1a,_2022-01-09,_DD_29.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Bl%C3%A9nidos_%28Ophioblennius_atlanticus%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-09%2C_DD_29.jpg/1280px-Bl%C3%A9nidos_%28Ophioblennius_atlanticus%29%2C_franja_marina_Teno-Rasca%2C_Tenerife%2C_Espa%C3%B1a%2C_2022-01-09%2C_DD_29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "rock_crab",
+    "file": "Grapsus adscensionis - Tenerife 01.jpg",
+    "author": "H. Zell",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Grapsus_adscensionis_-_Tenerife_01.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Grapsus_adscensionis_-_Tenerife_01.jpg/1280px-Grapsus_adscensionis_-_Tenerife_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "saddled",
+    "file": "Oblada (Oblada melanura), Ċirkewwa, Malta, Malta, 2021-08-24, DD 26.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Oblada_(Oblada_melanura),_%C4%8Airkewwa,_Malta,_Malta,_2021-08-24,_DD_26.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Oblada_%28Oblada_melanura%29%2C_%C4%8Airkewwa%2C_Malta%2C_Malta%2C_2021-08-24%2C_DD_26.jpg/1280px-Oblada_%28Oblada_melanura%29%2C_%C4%8Airkewwa%2C_Malta%2C_Malta%2C_2021-08-24%2C_DD_26.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
     "id": "salema",
     "file": "Salema_(Sarpa_salpa),_Catania,_Sicilia,_Italia,_2025-04-04,_DD_90.jpg",
     "author": "Diego Delso",
@@ -127,6 +317,16 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Salema_(Sarpa_salpa),_Catania,_Sicilia,_Italia,_2025-04-04,_DD_90.jpg",
     "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Salema_%28Sarpa_salpa%29%2C_Catania%2C_Sicilia%2C_Italia%2C_2025-04-04%2C_DD_90.jpg/1280px-Salema_%28Sarpa_salpa%29%2C_Catania%2C_Sicilia%2C_Italia%2C_2025-04-04%2C_DD_90.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "sand_bream",
+    "file": "Sand steenbras.jpg",
+    "author": "Nickthegreek82",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Sand_steenbras.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Sand_steenbras.jpg/1280px-Sand_steenbras.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {
@@ -150,6 +350,56 @@
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {
+    "id": "scorpionfish",
+    "file": "Scorpaena maderensis.jpg",
+    "author": "riblje-oko.hr",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Scorpaena_maderensis.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Scorpaena_maderensis.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "sea_cucumber",
+    "file": "Holothuria sanctori, Balie, Crete, Greece - 20070601.jpg",
+    "author": "This photo has been taken by Matthieu Sontag (User:Mirgolth) and released under the licenses stated below. You are free to use it for any purpose as long as you credit me as author, Wikimedia Commons as site and follow the terms of the licenses. Could you be kind enough to leave me a message on this page to inform me about your use of this picture.",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Holothuria_sanctori,_Balie,_Crete,_Greece_-_20070601.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Holothuria_sanctori%2C_Balie%2C_Crete%2C_Greece_-_20070601.jpg/1280px-Holothuria_sanctori%2C_Balie%2C_Crete%2C_Greece_-_20070601.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "snakelocks",
+    "file": "Anémona de mar común (Anemonia viridis), Parque natural de la Arrábida, Portugal, 2020-07-21, DD 07.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:An%C3%A9mona_de_mar_com%C3%BAn_(Anemonia_viridis),_Parque_natural_de_la_Arr%C3%A1bida,_Portugal,_2020-07-21,_DD_07.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/An%C3%A9mona_de_mar_com%C3%BAn_%28Anemonia_viridis%29%2C_Parque_natural_de_la_Arr%C3%A1bida%2C_Portugal%2C_2020-07-21%2C_DD_07.jpg/1280px-An%C3%A9mona_de_mar_com%C3%BAn_%28Anemonia_viridis%29%2C_Parque_natural_de_la_Arr%C3%A1bida%2C_Portugal%2C_2020-07-21%2C_DD_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "spiny_star",
+    "file": "Marthasterias glacialis Linosa 066.jpg",
+    "author": "tato grasso",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Marthasterias_glacialis_Linosa_066.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Marthasterias_glacialis_Linosa_066.jpg/1280px-Marthasterias_glacialis_Linosa_066.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "sponge",
+    "file": "Esponja de tubo amarilla (Aplysina aerophoba), Madeira, Portugal, 2019-05-30, DD 10.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Esponja_de_tubo_amarilla_(Aplysina_aerophoba),_Madeira,_Portugal,_2019-05-30,_DD_10.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Esponja_de_tubo_amarilla_%28Aplysina_aerophoba%29%2C_Madeira%2C_Portugal%2C_2019-05-30%2C_DD_10.jpg/1280px-Esponja_de_tubo_amarilla_%28Aplysina_aerophoba%29%2C_Madeira%2C_Portugal%2C_2019-05-30%2C_DD_10.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
     "id": "starfish",
     "file": "Estrella púrpura (Ophidiaster ophidianus), Cabo de Palos, España, 2022-07-15, DD 91.jpg",
     "author": "Diego Delso",
@@ -157,6 +407,56 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Estrella_p%C3%BArpura_(Ophidiaster_ophidianus),_Cabo_de_Palos,_Espa%C3%B1a,_2022-07-15,_DD_91.jpg",
     "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Estrella_p%C3%BArpura_%28Ophidiaster_ophidianus%29%2C_Cabo_de_Palos%2C_Espa%C3%B1a%2C_2022-07-15%2C_DD_91.jpg/1280px-Estrella_p%C3%BArpura_%28Ophidiaster_ophidianus%29%2C_Cabo_de_Palos%2C_Espa%C3%B1a%2C_2022-07-15%2C_DD_91.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "toby",
+    "file": "Canthigaster capistrata.jpg",
+    "author": "Philippe Guillaume",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Canthigaster_capistrata.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Canthigaster_capistrata.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "triggerfish",
+    "file": "Pez ballesta (Balistes capriscus), Parque natural de la Arrábida, Portugal, 2021-09-10, DD 11.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Pez_ballesta_(Balistes_capriscus),_Parque_natural_de_la_Arr%C3%A1bida,_Portugal,_2021-09-10,_DD_11.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Pez_ballesta_%28Balistes_capriscus%29%2C_Parque_natural_de_la_Arr%C3%A1bida%2C_Portugal%2C_2021-09-10%2C_DD_11.jpg/1280px-Pez_ballesta_%28Balistes_capriscus%29%2C_Parque_natural_de_la_Arr%C3%A1bida%2C_Portugal%2C_2021-09-10%2C_DD_11.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "triplefin",
+    "file": "Moma amarilla (Tripterygion delaisi), Parque natural de la Arrábida, Portugal, 2022-07-20, DD 29.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Moma_amarilla_(Tripterygion_delaisi),_Parque_natural_de_la_Arr%C3%A1bida,_Portugal,_2022-07-20,_DD_29.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Moma_amarilla_%28Tripterygion_delaisi%29%2C_Parque_natural_de_la_Arr%C3%A1bida%2C_Portugal%2C_2022-07-20%2C_DD_29.jpg/1280px-Moma_amarilla_%28Tripterygion_delaisi%29%2C_Parque_natural_de_la_Arr%C3%A1bida%2C_Portugal%2C_2022-07-20%2C_DD_29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "trumpetfish",
+    "file": "Pez trompeta atlántico (Aulostomus strigosus), Madeira, Portugal, 2019-05-31, DD 23.jpg",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Pez_trompeta_atl%C3%A1ntico_(Aulostomus_strigosus),_Madeira,_Portugal,_2019-05-31,_DD_23.jpg",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/Pez_trompeta_atl%C3%A1ntico_%28Aulostomus_strigosus%29%2C_Madeira%2C_Portugal%2C_2019-05-31%2C_DD_23.jpg/1280px-Pez_trompeta_atl%C3%A1ntico_%28Aulostomus_strigosus%29%2C_Madeira%2C_Portugal%2C_2019-05-31%2C_DD_23.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "changes": "Resized by Wikimedia; displayed cropped in the app."
+  },
+  {
+    "id": "two_banded",
+    "file": "Sparidae - Diplodus vulgaris.JPG",
+    "author": "Hectonichus",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Sparidae_-_Diplodus_vulgaris.JPG",
+    "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Sparidae_-_Diplodus_vulgaris.JPG/1280px-Sparidae_-_Diplodus_vulgaris.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
     "changes": "Resized by Wikimedia; displayed cropped in the app."
   },
   {

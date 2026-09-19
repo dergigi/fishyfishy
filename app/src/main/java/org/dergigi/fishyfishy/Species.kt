@@ -103,7 +103,7 @@ val guide = listOf(
         "A sea star moves with tiny tube feet underneath its arms. Watch patiently: it is a very slow explorer.",
         "Rocky sea floor", "Count the arms with your eyes. Leave it where it lives.",
         listOf("Arms", "Red"), "https://doris.ffessm.fr/Especes/Ophidiaster-ophidianus-Etoile-de-mer-violette-670"),
-)
+) + coastalGuide
 fun normalized(text: String): String = Normalizer.normalize(text, Normalizer.Form.NFD)
     .replace(Regex("\\p{M}"), "").lowercase(java.util.Locale.ROOT)
 fun Species.matches(query: String): Boolean = normalized((listOf(name, portuguese, german, scientific, clues) + tags + if ("Schools" in tags) listOf("shoal swarm") else emptyList()).joinToString(" "))
