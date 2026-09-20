@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Explore filters reappear above the gallery when scrolling upward and hide when scrolling downward.
+
 ### Fixed
 - Preserve Explore's gallery scroll position, search and filters when returning from a creature page or another screen.
 

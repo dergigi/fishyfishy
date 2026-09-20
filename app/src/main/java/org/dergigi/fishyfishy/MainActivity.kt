@@ -10,6 +10,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,6 +39,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
@@ -268,43 +274,82 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     val guide = LocalGuide.current
     var query by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableStateOf("All") }
-    val filtered = guide.filter { strings.matches(it, query) && (filter == "All" || it.group == filter || filter in it.tags) }
-    LazyVerticalGrid(columns = GridCells.Adaptive(160.dp), contentPadding = PaddingValues(20.dp), horizontalArrangement = Arrangement.spacedBy(14.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        item(span = { GridItemSpan(maxLineSpan) }) {
-            Column {
-                Eyebrow(strings("Madeira · your little ocean club"))
-                Spacer(Modifier.height(10.dp))
-                Heading(strings("Big wonders.\nLittle explorers."))
-                Text(strings("Learn their names. Remember your adventures."), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 9.dp, bottom = 20.dp))
-                BoxWithConstraints(Modifier.fillMaxWidth().clip(Shell).background(OceanInk)) {
-                    val roomy = maxWidth > 500.dp
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Column(Modifier.weight(1f).padding(24.dp)) {
-                            Eyebrow(strings("Just add curiosity"), true)
-                            Text(if (swims == 0) strings("Your first swim\nstarts a story.") else strings("More sea.\nMore memories."), fontFamily = FontFamily.Serif, fontSize = 27.sp, lineHeight = 32.sp, color = Color.White, modifier = Modifier.padding(vertical = 14.dp))
-                            Button(onClick = add, colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = OceanInk)) {
-                                Icon(Icons.Rounded.Add, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(strings("Log a swim"), fontWeight = FontWeight.Bold)
-                            }
-                        }
-                        FishArt(Modifier.width(if (roomy) 260.dp else 112.dp).height(208.dp))
-                    }
-                }
-                Spacer(Modifier.height(26.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(Modifier.weight(1f)) { Eyebrow(strings("Meet the neighbours")); Text(strings("Madeira field guide"), fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 5.dp)) }
-                    Text(strings("%d creatures", guide.size), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-                Spacer(Modifier.height(12.dp))
-                OutlinedTextField(value = query, onValueChange = { query = it }, placeholder = { Text(strings("Name, colour, or a clue…")) }, leadingIcon = { Icon(Icons.Rounded.Search, null) }, trailingIcon = { if (query.isNotEmpty()) IconButton(onClick = { query = "" }) { Icon(Icons.Rounded.Close, strings("Clear search")) } }, singleLine = true, shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth())
-                Row(Modifier.fillMaxWidth().padding(top = 6.dp).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("All", "Fish", "Critters", "Stripes", "Blue", "Schools", "Sand", "Shell", "Legs").forEach { tag -> FilterChip(selected = filter == tag, onClick = { filter = tag }, label = { Text(strings(tag)) }) }
-                }
+    val gridState = rememberLazyGridState()
+    val filterScroll = rememberScrollState()
+    var scrollingUp by rememberSaveable { mutableStateOf(false) }
+    val showFloatingFilters by remember { derivedStateOf { gridState.firstVisibleItemIndex > 1 && scrollingUp } }
+    val scrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPostScroll(consumed: Offset, available: Offset, source: NestedScrollSource): Offset {
+                if (consumed.y != 0f) scrollingUp = consumed.y > 0f
+                return Offset.Zero
             }
         }
-        items(filtered, key = { it.id }) { species -> SpeciesCard(species, language, species.id in confirmed, { open(species.id) }) }
-        if (filtered.isEmpty()) item(span = { GridItemSpan(maxLineSpan) }) { EmptyState(strings("A little mystery…"), strings("Try another name or clue. This is a small starter guide, so your creature might not be here yet.")) }
-        item(span = { GridItemSpan(maxLineSpan) }) {
-            Text(strings("Look with your eyes. Leave only bubbles.\nPhotos are clues: colours can vary with age and light."), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, lineHeight = 19.sp, modifier = Modifier.padding(vertical = 14.dp))
+    }
+    val filtered = guide.filter { strings.matches(it, query) && (filter == "All" || it.group == filter || filter in it.tags) }
+    Box(Modifier.fillMaxSize().nestedScroll(scrollConnection)) {
+        LazyVerticalGrid(state = gridState, columns = GridCells.Adaptive(160.dp), contentPadding = PaddingValues(20.dp), horizontalArrangement = Arrangement.spacedBy(14.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            item(key = "intro", span = { GridItemSpan(maxLineSpan) }) {
+                Column {
+                    Eyebrow(strings("Madeira · your little ocean club"))
+                    Spacer(Modifier.height(10.dp))
+                    Heading(strings("Big wonders.\nLittle explorers."))
+                    Text(strings("Learn their names. Remember your adventures."), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 9.dp, bottom = 20.dp))
+                    BoxWithConstraints(Modifier.fillMaxWidth().clip(Shell).background(OceanInk)) {
+                        val roomy = maxWidth > 500.dp
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Column(Modifier.weight(1f).padding(24.dp)) {
+                                Eyebrow(strings("Just add curiosity"), true)
+                                Text(if (swims == 0) strings("Your first swim\nstarts a story.") else strings("More sea.\nMore memories."), fontFamily = FontFamily.Serif, fontSize = 27.sp, lineHeight = 32.sp, color = Color.White, modifier = Modifier.padding(vertical = 14.dp))
+                                Button(onClick = add, colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = OceanInk)) {
+                                    Icon(Icons.Rounded.Add, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(strings("Log a swim"), fontWeight = FontWeight.Bold)
+                                }
+                            }
+                            FishArt(Modifier.width(if (roomy) 260.dp else 112.dp).height(208.dp))
+                        }
+                    }
+                    Spacer(Modifier.height(26.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) { Eyebrow(strings("Meet the neighbours")); Text(strings("Madeira field guide"), fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 5.dp)) }
+                        Text(strings("%d creatures", guide.size), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    OutlinedTextField(value = query, onValueChange = { query = it }, placeholder = { Text(strings("Name, colour, or a clue…")) }, leadingIcon = { Icon(Icons.Rounded.Search, null) }, trailingIcon = { if (query.isNotEmpty()) IconButton(onClick = { query = "" }) { Icon(Icons.Rounded.Close, strings("Clear search")) } }, singleLine = true, shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth())
+                }
+            }
+            item(key = "filters", span = { GridItemSpan(maxLineSpan) }) {
+                ExploreFilters(filter, { filter = it }, filterScroll)
+            }
+            items(filtered, key = { it.id }) { species -> SpeciesCard(species, language, species.id in confirmed, { open(species.id) }) }
+            if (filtered.isEmpty()) item(span = { GridItemSpan(maxLineSpan) }) { EmptyState(strings("A little mystery…"), strings("Try another name or clue. This is a small starter guide, so your creature might not be here yet.")) }
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Text(strings("Look with your eyes. Leave only bubbles.\nPhotos are clues: colours can vary with age and light."), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, lineHeight = 19.sp, modifier = Modifier.padding(vertical = 14.dp))
+            }
+        }
+        AnimatedVisibility(
+            visible = showFloatingFilters,
+            enter = slideInVertically { -it }, exit = slideOutVertically { -it },
+            modifier = Modifier.align(Alignment.TopCenter),
+        ) {
+            Surface(color = MaterialTheme.colorScheme.background, shadowElevation = 4.dp) {
+                ExploreFilters(filter, { selected ->
+                    filter = selected
+                    // Show the new results immediately below the original filter row.
+                    gridState.requestScrollToItem(1)
+                }, filterScroll, Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp))
+            }
+        }
+    }
+}
+
+@Composable private fun ExploreFilters(
+    selected: String, select: (String) -> Unit, scroll: androidx.compose.foundation.ScrollState,
+    modifier: Modifier = Modifier,
+) {
+    val strings = LocalStrings.current
+    Row(modifier.fillMaxWidth().horizontalScroll(scroll), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        listOf("All", "Fish", "Critters", "Stripes", "Blue", "Schools", "Sand", "Shell", "Legs").forEach { tag ->
+            FilterChip(selected = selected == tag, onClick = { select(tag) }, label = { Text(strings(tag)) })
         }
     }
 }
