@@ -17,7 +17,8 @@ class LocalizationTest {
             val strings = AppStrings.parse(language, raw)
             for (species in guide) {
                 val fields = listOf(species.clues, species.fact, species.habitat, species.mission, species.photoLabel) +
-                    species.otherPhotos.map { it.label } + listOfNotNull(species.comparisonNote)
+                    species.otherPhotos.flatMap { listOfNotNull(it.label, it.description) } +
+                    listOfNotNull(species.comparisonNote, species.photoDescription)
                 fields.forEach { assertTrue("Missing $language translation: $it", it in keys) }
                 val localized = strings.species(species)
                 assertEquals(species.id, localized.id)
@@ -28,6 +29,13 @@ class LocalizationTest {
                 assertEquals(species.tags, localized.tags)
                 assertEquals(species.group, localized.group)
                 assertNotEquals(species.fact, localized.fact)
+                species.photoDescription?.let { assertEquals(strings(it), localized.photoDescription) }
+                species.otherPhotos.zip(localized.otherPhotos).forEach { (original, translated) ->
+                    assertEquals(original.creditId, translated.creditId)
+                    assertEquals(original.image, translated.image)
+                    assertEquals(strings(original.label), translated.label)
+                    original.description?.let { assertEquals(strings(it), translated.description) }
+                }
             }
         }
     }

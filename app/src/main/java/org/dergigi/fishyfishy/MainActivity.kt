@@ -376,7 +376,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     val context = LocalContext.current
     val lastSwim = model.lastLoggedSwim
     val lastSwimHeads = lastSwim?.let { model.headIds(it.id) }.orEmpty()
-    val photos = listOf(GuidePhoto(species.image, species.id, species.photoLabel)) + species.otherPhotos
+    val photos = listOf(GuidePhoto(species.image, species.id, species.photoLabel, species.photoDescription)) + species.otherPhotos
     val pager = rememberPagerState(pageCount = { photos.size })
     val galleryScope = rememberCoroutineScope()
     val photo = photos[pager.currentPage]
@@ -400,15 +400,16 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(photo.label, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
                     if (photos.size > 1) {
-                        IconButton(onClick = { galleryScope.launch { pager.animateScrollToPage(pager.currentPage - 1) } }, enabled = pager.currentPage > 0) {
+                        IconButton(onClick = { galleryScope.launch { pager.animateScrollToPage((pager.currentPage - 1).coerceAtLeast(0)) } }, enabled = pager.currentPage > 0) {
                             Icon(Icons.Rounded.ChevronLeft, strings("Previous photo"))
                         }
                         Text(strings("%d / %d", pager.currentPage + 1, photos.size), fontSize = 13.sp)
-                        IconButton(onClick = { galleryScope.launch { pager.animateScrollToPage(pager.currentPage + 1) } }, enabled = pager.currentPage < photos.lastIndex) {
+                        IconButton(onClick = { galleryScope.launch { pager.animateScrollToPage((pager.currentPage + 1).coerceAtMost(photos.lastIndex)) } }, enabled = pager.currentPage < photos.lastIndex) {
                             Icon(Icons.Rounded.ChevronRight, strings("Next photo"))
                         }
                     }
                 }
+                photo.description?.let { Text(it, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp) }
                 Text(if (photos.size > 1) strings("Swipe for more photos · Tap to zoom") else strings("Tap the photo to zoom in"), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
             }
         }

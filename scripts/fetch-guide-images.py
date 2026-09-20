@@ -4,6 +4,11 @@ import argparse, concurrent.futures, html, json, pathlib, re, urllib.parse, urll
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SPECIES = {'wrasse':'Ornate wrasse','salema':'Salema porgy','parrotfish':'Sparisoma cretense','bream':'Diplodus sargus','zebra':'Diplodus cervinus','damselfish':'Similiparma lurida','comber':'Serranus atricauda','grouper':'Dusky grouper','octopus':'Octopus vulgaris','cuttlefish':'Common cuttlefish','urchin':'Diadema africanum','starfish':'Ophidiaster ophidianus'}
 CURATED = {
+    'parrotfish_female': 'Sparisoma cretense 2 (cropped).jpg',
+    'wrasse_male': 'Thalassoma pavo male.jpg',
+    'wrasse_young': 'Juvénile de Girelle paon.jpg',
+    'salema_school': 'Banco de salemas (Sarpa salpa), Madeira, Portugal, 2019-05-30, DD 06.jpg',
+
     'limpet': 'Patella aspera 01.JPG',
     'hermit_crab': 'Calcinus tubularis 1.jpg',
     'saddled': 'Oblada (Oblada melanura), Ċirkewwa, Malta, Malta, 2021-08-24, DD 26.jpg',

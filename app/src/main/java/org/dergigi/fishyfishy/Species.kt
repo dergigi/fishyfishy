@@ -3,7 +3,7 @@ package org.dergigi.fishyfishy
 import androidx.annotation.DrawableRes
 import java.text.Normalizer
 
-data class GuidePhoto(@DrawableRes val image: Int, val creditId: String, val label: String)
+data class GuidePhoto(@DrawableRes val image: Int, val creditId: String, val label: String, val description: String? = null)
 
 data class Species(
     val id: String, val name: String, val portuguese: String, val german: String,
@@ -12,6 +12,7 @@ data class Species(
     val tags: List<String>, val source: String,
     val photoLabel: String = "Reference photo", val otherPhotos: List<GuidePhoto> = emptyList(),
     val comparisonNote: String? = null,
+    val photoDescription: String? = null,
 )
 
 val guide = listOf(
@@ -19,17 +20,26 @@ val guide = listOf(
         "A slim, busy swimmer with blue-green markings. Colours and stripes change with age and sex.",
         "This little hunter searches the rocks for tiny shellfish and other small animals to eat.",
         "Rocky shores and seaweed", "Can you spot the blue markings on its face?",
-        listOf("Colourful", "Stripes", "Small"), "https://doris.ffessm.fr/Especes/Thalassoma-pavo-Girelle-paon-744"),
+        listOf("Colourful", "Stripes", "Small"), "https://doris.ffessm.fr/Especes/Thalassoma-pavo-Girelle-paon-744",
+        photoLabel = "Female colour pattern",
+        photoDescription = "Look for several blue bars across the body. Some males wear this pattern too, so colour alone cannot always tell us the sex.",
+        otherPhotos = listOf(
+            GuidePhoto(R.drawable.wrasse_male, "wrasse_male", "Male colour pattern", "A broad blue-and-red band behind the head and fewer bars along the body mark the terminal male pattern."),
+            GuidePhoto(R.drawable.wrasse_young, "wrasse_young", "Young fish", "Young wrasse are greener, with a dark spot on the back and a rounded tail. Can you find the little fish among the seaweed?")
+        )),
     Species("salema", "Salema", "Salema", "Goldstrieme", "Sarpa salpa", R.drawable.salema, "Fish",
         "A silver, oval fish with several thin golden lines running from head to tail. Often swims in a group.",
         "Grown-up salema graze on sea plants. A group can look like a little underwater lawn-mowing team!",
         "Seaweed-covered rocks", "Watch a school. Do the fish turn together?",
-        listOf("Silver", "Stripes", "Schools"), "https://www.fishbase.se/summary/Sarpa-salpa.html"),
+        listOf("Silver", "Stripes", "Schools"), "https://www.fishbase.se/summary/Sarpa-salpa.html",
+        otherPhotos = listOf(GuidePhoto(R.drawable.salema_school, "salema_school", "School", "A school of salema in Madeira. Look for the oval bodies and golden stripes when the fish swim closer."))),
     Species("parrotfish", "Mediterranean parrotfish", "Bodião", "Europäischer Papageifisch", "Sparisoma cretense", R.drawable.parrotfish, "Fish",
         "Look for a blunt head and a beak-like mouth. Females can be red with a dark saddle and yellow patches; males are greyer.",
         "Its teeth join together to make a little beak, useful for nibbling food from rocks.",
         "Rocky reefs with algae", "Can you see its beak working? Watch without getting closer.",
-        listOf("Colourful", "Red", "Big"), "https://www.fishbase.se/summary/Sparisoma-cretense.html"),
+        listOf("Colourful", "Red", "Big"), "https://doris.ffessm.fr/Especes/Sparisoma-cretense-Poisson-perroquet-mediterraneen-4462",
+        photoLabel = "Male", photoDescription = "Males are mostly grey or brown. Look at the blunt head and beak-shaped mouth as well as the colour.",
+        otherPhotos = listOf(GuidePhoto(R.drawable.parrotfish_female, "parrotfish_female", "Female", "Females are red with a dark saddle behind the head and yellow patches. The yellow around the eye can make the head stand out."))),
     Species("bream", "White seabream", "Sargo", "Geißbrasse", "Diplodus sargus", R.drawable.bream, "Fish",
         "A flat, silvery body with dark vertical bars and a dark patch near the tail. Bars can look faint on adults.",
         "Its strong teeth help it eat crunchy food, including small shellfish.",

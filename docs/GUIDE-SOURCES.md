@@ -43,3 +43,14 @@ Species-specific identification and biology links are in `CoastalGuide.kt`, usin
 Older local documents use *Liza aurata* for *Chelon auratus*, *Anemonia sulcata* for *A. viridis*, and *Grapsus grapsus* for the eastern Atlantic crab now treated as *G. adscensionis*. Their outdated *Diadema antillarum* name is not carried into the app. English, Portuguese and German names are learning labels, not unique taxonomic identifiers. Some less familiar invertebrates use descriptive translated labels; the scientific name is the precise reference. Common labels such as “bernardo-eremita” and “caranguejo-aranha” cover more than one species. The guide asks users to keep difficult comparisons uncertain.
 
 Thirty new photos were selected individually from Commons and visually reviewed. Living animals in habitat are preferred. Reference photos can be from elsewhere in the species' range; they do not constitute Madeira occurrence evidence. Full-screen viewing preserves the whole image and its author/licence attribution.
+
+## Identification photo comparisons
+
+The detail gallery keeps each photo's own credit and source link. All images are bundled for offline use. The additional comparison images and caption evidence are:
+
+- **Mediterranean parrotfish:** existing grey male plus a red female. [DORIS species description](https://doris.ffessm.fr/Especes/Sparisoma-cretense-Poisson-perroquet-mediterraneen-4462) describes the colour differences; [female photo metadata](https://commons.wikimedia.org/wiki/File:Sparisoma_cretense_2_(cropped).jpg) explicitly identifies a female.
+- **Ornate wrasse:** existing female-pattern photograph, [male photograph](https://commons.wikimedia.org/wiki/File:Thalassoma_pavo_male.jpg), and [juvenile photograph](https://commons.wikimedia.org/wiki/File:Juv%C3%A9nile_de_Girelle_paon.jpg). [DORIS](https://doris.ffessm.fr/Especes/Thalassoma-pavo-Girelle-paon-744) distinguishes initial and terminal colour phases: initial males can resemble females. Captions therefore describe colour patterns rather than claiming that every striped fish is female. The small juvenile is shown among seaweed; zoom helps locate it.
+- **Salema:** an additional school photographed in Madeira; location and species are documented in the linked Commons attribution record.
+- Existing Canary damselfish alternate view and Mediterranean damselfish juvenile/adult comparison use the same swipe gallery. The latter retains its lookalike caveat.
+
+Photos are examples, not an exhaustive catalogue of every age, sex or seasonal colour. Sex is not inferred for other reference photographs. Commons filenames, authors, licences and source URLs are retained in `app/src/main/assets/photo-credits.json`; curated downloads are reproducible through `scripts/fetch-guide-images.py`.

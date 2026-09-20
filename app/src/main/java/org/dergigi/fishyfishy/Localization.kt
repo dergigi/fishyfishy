@@ -19,8 +19,9 @@ class AppStrings(val language: String, private val translations: Map<String, Str
         species.tags.any { normalized(invoke(it)).contains(normalized(query.trim())) }
     fun species(original: Species) = original.copy(
         clues = invoke(original.clues), fact = invoke(original.fact), habitat = invoke(original.habitat),
+        photoDescription = original.photoDescription?.let { invoke(it) },
         mission = invoke(original.mission), photoLabel = invoke(original.photoLabel),
-        otherPhotos = original.otherPhotos.map { it.copy(label = invoke(it.label)) },
+        otherPhotos = original.otherPhotos.map { it.copy(label = invoke(it.label), description = it.description?.let { text -> invoke(text) }) },
         comparisonNote = original.comparisonNote?.let { invoke(it) },
     )
     companion object {

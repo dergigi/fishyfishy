@@ -30,7 +30,7 @@ Requires JDK 17 and Android SDK 35.
 - Play a gentle photo identification game together.
 - Open a documentary or educational short in the selected language from each creature page; broader habitat films are labelled clearly. Portuguese shorts use on-screen Portuguese text. See [film selections](docs/DOCUMENTARIES.md).
 - Choose a journal folder and sync it between devices with Syncthing; resolve simultaneous edits in the app.
-- Compare young and adult fish photos; tap to open full-screen and pinch or double-tap to zoom.
+- Swipe through captioned reference photos, including male/female parrotfish and wrasse, juveniles and a Madeira salema school; tap to open full-screen and pinch or double-tap to zoom.
 - Find sandy-bottom fish, shells and many-legged critters with visual clue filters.
 - Export and restore a JSON journal backup through Android's document picker.
 

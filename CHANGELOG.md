@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Swipeable creature photos with captions, photo navigation and tap-to-zoom.
+- Male/female colour comparisons for parrotfish and ornate wrasse, a young wrasse and a Madeira salema school, with identification notes in all three languages.
 
 ### Fixed
 - Shorten the German swim navigation label to “Touren” to fit on one line.
