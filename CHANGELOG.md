@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Preserve Explore's gallery scroll position, search and filters when returning from a creature page or another screen.
+
 ## [0.5.0] - 2026-09-19
 
 ### Added

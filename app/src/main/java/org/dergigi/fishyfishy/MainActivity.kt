@@ -30,6 +30,7 @@ import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -124,6 +125,8 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     var quiz by rememberSaveable { mutableStateOf(false) }
     var editor by rememberSaveable { mutableStateOf<String?>(null) }
     var seed by rememberSaveable { mutableStateOf<String?>(null) }
+    // Keep the gallery's scroll position, search and filters while its details are open.
+    val exploreState = rememberSaveableStateHolder()
     val speak = rememberSpeaker()
     val lifecycle = (context as ComponentActivity).lifecycle
     var foreground by remember { mutableStateOf(lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) }
@@ -211,7 +214,9 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                             about -> AboutScreen(model, { chooseFolder.launch(model.folderUri?.toUri()) }, { export.launch("fishyfishy-${LocalDate.now()}.json") }, { restore.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) })
                             quiz -> QuizScreen(language, speak)
                             detail != null -> SpeciesScreen(guide.first { it.id == detail }, language, confirmed.contains(detail), speak, { addSwim(detail) })
-                            tab == 0 -> ExploreScreen(language, confirmed, model.trips.size, { detail = it }, { addSwim() })
+                            tab == 0 -> exploreState.SaveableStateProvider("explore") {
+                                ExploreScreen(language, confirmed, model.trips.size, { detail = it }, { addSwim() })
+                            }
                             tab == 1 -> JournalScreen(model, { addSwim() }, { model.clearOperationError(); editor = it.id; seed = null })
                             else -> CollectionScreen(confirmed, language, { detail = it }, { quiz = true })
                         }
