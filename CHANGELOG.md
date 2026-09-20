@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-09-20
+
 ### Added
 - Add a creature directly to the last logged swim from its detail page, with the destination shown and duplicate sightings prevented.
 - Explore filters reappear above the gallery when scrolling upward and hide when scrolling downward.
@@ -65,7 +67,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Personal discovery collection, photo identification game, and journal backup export and restore.
 - Signed Android releases and Zapstore publishing under the existing publisher identity.
 
-[Unreleased]: https://github.com/dergigi/fishyfishy/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/dergigi/fishyfishy/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/dergigi/fishyfishy/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/dergigi/fishyfishy/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/dergigi/fishyfishy/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/dergigi/fishyfishy/compare/v0.3.1...v0.3.2
