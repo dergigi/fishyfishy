@@ -414,5 +414,9 @@
   "Already in this swim": "Schon in dieser Tour",
   "Still marked as an uncertain sighting.": "Weiterhin als unsichere Sichtung markiert.",
   "Creature added to your swim.": "Tier zu deiner Tour hinzugefügt.",
-  "This swim is no longer available.": "Diese Tour ist nicht mehr verfügbar."
+  "This swim is no longer available.": "Diese Tour ist nicht mehr verfügbar.",
+  "Previous photo": "Vorheriges Foto",
+  "Next photo": "Nächstes Foto",
+  "%d / %d": "%d / %d",
+  "Swipe for more photos · Tap to zoom": "Für weitere Fotos wischen · Zum Vergrößern tippen"
 }

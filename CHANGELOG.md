@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Swipeable creature photos with captions, photo navigation and tap-to-zoom.
+
 ### Fixed
 - Shorten the German swim navigation label to “Touren” to fit on one line.
 

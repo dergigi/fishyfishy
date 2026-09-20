@@ -13,6 +13,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -374,8 +377,9 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     val lastSwim = model.lastLoggedSwim
     val lastSwimHeads = lastSwim?.let { model.headIds(it.id) }.orEmpty()
     val photos = listOf(GuidePhoto(species.image, species.id, species.photoLabel)) + species.otherPhotos
-    var photoIndex by rememberSaveable(species.id) { mutableStateOf(0) }
-    val photo = photos[photoIndex.coerceIn(photos.indices)]
+    val pager = rememberPagerState(pageCount = { photos.size })
+    val galleryScope = rememberCoroutineScope()
+    val photo = photos[pager.currentPage]
     var showPhoto by rememberSaveable(species.id) { mutableStateOf(false) }
     val credits = remember(photo.creditId) {
         val all = JSONArray(context.assets.open("photo-credits.json").bufferedReader().use { it.readText() })
@@ -385,9 +389,29 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
         "${credits.getString("author")} · ${credits.getString("license")}") { showPhoto = false }
     LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
         item {
-            Image(painterResource(photo.image), "${species.display(language)}: ${photo.label}", Modifier.fillMaxWidth().heightIn(max = 430.dp).aspectRatio(1.4f).clip(Shell).clickable(onClickLabel = strings("Open photo to zoom")) { showPhoto = true }, contentScale = ContentScale.Crop)
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                HorizontalPager(state = pager, key = { photos[it].creditId }, modifier = Modifier.fillMaxWidth()) { index ->
+                    val page = photos[index]
+                    Image(painterResource(page.image), "${species.display(language)}: ${page.label}",
+                        Modifier.fillMaxWidth().heightIn(max = 430.dp).aspectRatio(1.4f).clip(Shell)
+                            .clickable(onClickLabel = strings("Open photo to zoom")) { showPhoto = true },
+                        contentScale = ContentScale.Fit)
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(photo.label, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+                    if (photos.size > 1) {
+                        IconButton(onClick = { galleryScope.launch { pager.animateScrollToPage(pager.currentPage - 1) } }, enabled = pager.currentPage > 0) {
+                            Icon(Icons.Rounded.ChevronLeft, strings("Previous photo"))
+                        }
+                        Text(strings("%d / %d", pager.currentPage + 1, photos.size), fontSize = 13.sp)
+                        IconButton(onClick = { galleryScope.launch { pager.animateScrollToPage(pager.currentPage + 1) } }, enabled = pager.currentPage < photos.lastIndex) {
+                            Icon(Icons.Rounded.ChevronRight, strings("Next photo"))
+                        }
+                    }
+                }
+                Text(if (photos.size > 1) strings("Swipe for more photos · Tap to zoom") else strings("Tap the photo to zoom in"), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+            }
         }
-        item { Text(strings("Tap the photo to zoom in"), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp) }
         item {
             Eyebrow(if (spotted) strings("A familiar face · spotted by you") else if (species.comparisonNote != null) strings("A lookalike to compare") else strings("Meet a Madeira neighbour"))
             Spacer(Modifier.height(9.dp)); Heading(species.display(language))
@@ -429,11 +453,6 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                     }
                     Text(strings("Scientific · %s", species.scientific), color = MaterialTheme.colorScheme.onSurfaceVariant, fontStyle = FontStyle.Italic, modifier = Modifier.padding(top = 14.dp))
                 }
-            }
-        }
-        if (photos.size > 1) item {
-            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                photos.forEachIndexed { index, option -> FilterChip(selected = photoIndex == index, onClick = { photoIndex = index }, label = { Text(option.label) }) }
             }
         }
         species.comparisonNote?.let { note -> item { FactBlock(strings("Compare carefully"), note, Icons.Rounded.Search) } }

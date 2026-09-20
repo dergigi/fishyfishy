@@ -414,5 +414,9 @@
   "Already in this swim": "Já está neste mergulho",
   "Still marked as an uncertain sighting.": "Continua marcado como avistamento incerto.",
   "Creature added to your swim.": "Animal adicionado ao teu mergulho.",
-  "This swim is no longer available.": "Este mergulho já não está disponível."
+  "This swim is no longer available.": "Este mergulho já não está disponível.",
+  "Previous photo": "Foto anterior",
+  "Next photo": "Foto seguinte",
+  "%d / %d": "%d / %d",
+  "Swipe for more photos · Tap to zoom": "Desliza para ver mais fotos · Toca para ampliar"
 }
