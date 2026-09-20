@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-09-20
+
 ### Added
 - Swipeable creature photos with captions, photo navigation and tap-to-zoom.
 - Male/female colour comparisons for parrotfish and ornate wrasse, a young wrasse and a Madeira salema school, with identification notes in all three languages.
@@ -74,7 +76,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Personal discovery collection, photo identification game, and journal backup export and restore.
 - Signed Android releases and Zapstore publishing under the existing publisher identity.
 
-[Unreleased]: https://github.com/dergigi/fishyfishy/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/dergigi/fishyfishy/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/dergigi/fishyfishy/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/dergigi/fishyfishy/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/dergigi/fishyfishy/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/dergigi/fishyfishy/compare/v0.3.2...v0.4.0
