@@ -23,6 +23,8 @@ class JournalModel(application: Application) : AndroidViewModel(application) {
     private var store: RevisionStore = folderUri?.let { FolderRevisionStore(resolver, Uri.parse(it)) } ?: localStore
     private var snapshot = JournalSnapshot(emptyList())
     var trips by mutableStateOf<List<Trip>>(emptyList()); private set
+    private var lastLoggedId by mutableStateOf(prefs.getString("lastLoggedTrip", null))
+    val lastLoggedSwim: Trip? get() = trips.find { it.id == lastLoggedId } ?: trips.firstOrNull()
     var conflicts by mutableStateOf<Map<String, List<SwimRevision>>>(emptyMap()); private set
     var loading by mutableStateOf(true); private set
     var busy by mutableStateOf(false); private set
@@ -98,7 +100,18 @@ class JournalModel(application: Application) : AndroidViewModel(application) {
     }
     fun save(trip: Trip, expectedHeads: Set<String>, done: () -> Unit) {
         if (busy || loading || loadError != null) return
-        mutate("Swim saved. Another little adventure!", done) { SyncJournal(store).save(trip, trip.id, expectedHeads) }
+        val newlyLogged = expectedHeads.isEmpty() && trips.none { it.id == trip.id }
+        mutate("Swim saved. Another little adventure!", {
+            if (newlyLogged) {
+                lastLoggedId = trip.id
+                prefs.edit().putString("lastLoggedTrip", trip.id).apply()
+            }
+            done()
+        }) { SyncJournal(store).save(trip, trip.id, expectedHeads) }
+    }
+    fun addSighting(tripId: String, speciesId: String, expectedHeads: Set<String>) {
+        if (busy || loading || loadError != null) return
+        mutate("Creature added to your swim.", {}) { SyncJournal(store).addSighting(tripId, speciesId, expectedHeads) }
     }
     fun delete(trip: Trip, expectedHeads: Set<String>, done: () -> Unit) {
         if (busy || loading || loadError != null) return

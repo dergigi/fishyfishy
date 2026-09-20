@@ -23,6 +23,45 @@ class SyncJournalTest {
         }
     }
     private fun heads(s: JournalSnapshot, id: String = "swim") = s.heads(id).map { it.id }.toSet()
+    @Test fun quickSightingPreservesSwimDetailsAndSyncsToAnotherDevice() {
+        val a = MemoryStore(); val b = MemoryStore(); val journal = SyncJournal(a)
+        val original = trip().copy(uncertain = setOf("wrasse"))
+        val base = journal.save(original, original.id, emptySet())
+        journal.copyTo(b)
+        val updated = journal.addSighting(original.id, "octopus", heads(base))
+        assertEquals(original.copy(sightings = setOf("wrasse", "octopus")), updated.trips.single())
+        assertEquals(updated.trips, journal.copyTo(b).trips)
+        assertTrue(journal.copyTo(b).conflicts.isEmpty())
+    }
+    @Test fun quickSightingDoesNotDuplicateOrConfirmAnUncertainSighting() {
+        val store = MemoryStore(); val journal = SyncJournal(store)
+        val original = trip().copy(uncertain = setOf("wrasse"))
+        val base = journal.save(original, original.id, emptySet())
+        repeat(5) { journal.addSighting(original.id, "wrasse", heads(base)) }
+        assertEquals(1, store.read().size)
+        assertEquals(original, journal.read().trips.single())
+    }
+    @Test fun quickSightingRejectsAChangedOrDeletedSwim() {
+        val store = MemoryStore(); val journal = SyncJournal(store)
+        val base = journal.save(trip(), "swim", emptySet())
+        val edited = journal.save(trip().copy(notes = "New notes from tablet"), "swim", heads(base))
+        assertThrows(IllegalArgumentException::class.java) { journal.addSighting("swim", "octopus", heads(base)) }
+        assertEquals("New notes from tablet", journal.read().trips.single().notes)
+        val deleted = journal.save(null, "swim", heads(edited))
+        assertThrows(IllegalArgumentException::class.java) { journal.addSighting("swim", "octopus", heads(edited)) }
+        assertThrows(IllegalArgumentException::class.java) { journal.addSighting("swim", "octopus", heads(deleted)) }
+        assertTrue(journal.read().trips.isEmpty())
+        assertEquals(3, store.read().size)
+    }
+    @Test fun quickSightingRequiresConflictResolution() {
+        val a = MemoryStore(); val b = MemoryStore(); val ja = SyncJournal(a); val jb = SyncJournal(b)
+        val base = ja.save(trip(), "swim", emptySet()); ja.copyTo(b)
+        ja.save(trip().copy(notes = "Phone"), "swim", heads(base))
+        jb.save(trip().copy(notes = "Tablet"), "swim", heads(base))
+        val conflict = ja.copyTo(b)
+        assertThrows(IllegalArgumentException::class.java) { jb.addSighting("swim", "octopus", heads(conflict)) }
+        assertEquals(conflict.revisions, jb.read().revisions)
+    }
     @Test fun differentDevicesAddIndependentSwimsWithoutOverwriting() {
         val a = MemoryStore(); val b = MemoryStore()
         SyncJournal(a).save(trip("one"), "one", emptySet())

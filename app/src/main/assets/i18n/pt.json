@@ -408,5 +408,11 @@
   "%d min · %s": "%d min · %s",
   "Selected: %d · To check: %d": "Selecionados: %d · Por confirmar: %d",
   "%s · %d min": "%s · %d min",
-  "FishyFishy %s · Made with love for the sea": "FishyFishy %s · Feito com amor pelo mar"
+  "FishyFishy %s · Made with love for the sea": "FishyFishy %s · Feito com amor pelo mar",
+  "Last swim": "Último mergulho",
+  "Add to last swim": "Adicionar ao último mergulho",
+  "Already in this swim": "Já está neste mergulho",
+  "Still marked as an uncertain sighting.": "Continua marcado como avistamento incerto.",
+  "Creature added to your swim.": "Animal adicionado ao teu mergulho.",
+  "This swim is no longer available.": "Este mergulho já não está disponível."
 }

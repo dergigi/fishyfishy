@@ -219,7 +219,7 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                         when {
                             about -> AboutScreen(model, { chooseFolder.launch(model.folderUri?.toUri()) }, { export.launch("fishyfishy-${LocalDate.now()}.json") }, { restore.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) })
                             quiz -> QuizScreen(language, speak)
-                            detail != null -> SpeciesScreen(guide.first { it.id == detail }, language, confirmed.contains(detail), speak, { addSwim(detail) })
+                            detail != null -> SpeciesScreen(guide.first { it.id == detail }, language, confirmed.contains(detail), speak, model, { addSwim(detail) })
                             tab == 0 -> exploreState.SaveableStateProvider("explore") {
                                 ExploreScreen(language, confirmed, model.trips.size, { detail = it }, { addSwim() })
                             }
@@ -368,9 +368,11 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     }
 }
 
-@Composable private fun SpeciesScreen(species: Species, language: String, spotted: Boolean, speak: Speaker, add: () -> Unit) {
+@Composable private fun SpeciesScreen(species: Species, language: String, spotted: Boolean, speak: Speaker, model: JournalModel, add: () -> Unit) {
     val strings = LocalStrings.current
     val context = LocalContext.current
+    val lastSwim = model.lastLoggedSwim
+    val lastSwimHeads = lastSwim?.let { model.headIds(it.id) }.orEmpty()
     val photos = listOf(GuidePhoto(species.image, species.id, species.photoLabel)) + species.otherPhotos
     var photoIndex by rememberSaveable(species.id) { mutableStateOf(0) }
     val photo = photos[photoIndex.coerceIn(photos.indices)]
@@ -390,6 +392,30 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
             Eyebrow(if (spotted) strings("A familiar face · spotted by you") else if (species.comparisonNote != null) strings("A lookalike to compare") else strings("Meet a Madeira neighbour"))
             Spacer(Modifier.height(9.dp)); Heading(species.display(language))
             Text(species.scientific, fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 16.sp, modifier = Modifier.padding(top = 6.dp))
+        }
+        lastSwim?.let { trip ->
+            item {
+                val alreadyAdded = species.id in trip.sightings
+                val conflict = trip.id in model.conflicts
+                Surface(shape = Shell, color = MaterialTheme.colorScheme.surfaceVariant) {
+                    Column(Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Eyebrow(strings("Last swim"))
+                        Text(trip.place, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                        Text(LocalDate.parse(trip.date).format(DateTimeFormatter.ofPattern("d MMM yyyy", strings.locale)), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Button(
+                            onClick = { model.addSighting(trip.id, species.id, lastSwimHeads) },
+                            enabled = !alreadyAdded && !model.busy && model.loadError == null && !conflict,
+                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
+                        ) {
+                            Icon(if (alreadyAdded) Icons.Rounded.Check else Icons.Rounded.Add, null)
+                            Spacer(Modifier.width(8.dp))
+                            Text(if (alreadyAdded) strings("Already in this swim") else strings("Add to last swim"))
+                        }
+                        if (species.id in trip.uncertain) Text(strings("Still marked as an uncertain sighting."), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp)
+                        if (conflict) Text(strings("Resolve this swim's sync conflict in Storage first."), color = MaterialTheme.colorScheme.error, fontSize = 13.sp)
+                    }
+                }
+            }
         }
         item {
             Surface(shape = Shell, color = MaterialTheme.colorScheme.surfaceContainerLow) {

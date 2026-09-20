@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Add a creature directly to the last logged swim from its detail page, with the destination shown and duplicate sightings prevented.
 - Explore filters reappear above the gallery when scrolling upward and hide when scrolling downward.
 
 ### Fixed

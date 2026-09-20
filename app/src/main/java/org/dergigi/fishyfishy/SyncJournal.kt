@@ -85,6 +85,17 @@ interface RevisionStore {
 
 class SyncJournal(private val store: RevisionStore) {
     fun read() = RevisionCodec.snapshot(store.read())
+    fun addSighting(tripId: String, speciesId: String, expectedHeads: Set<String>): JournalSnapshot {
+        val fresh = read()
+        require(fresh.heads(tripId).map { it.id }.toSet() == expectedHeads) {
+            "This swim changed on another device. Close it and review the latest version before saving."
+        }
+        require(tripId !in fresh.conflicts) { "Resolve this swim's sync conflict in Storage first." }
+        val trip = requireNotNull(fresh.trips.find { it.id == tripId }) { "This swim is no longer available." }
+        // A repeat tap must neither duplicate a sighting nor silently confirm an uncertain one.
+        if (speciesId in trip.sightings) return fresh
+        return save(trip.copy(sightings = trip.sightings + speciesId), tripId, expectedHeads)
+    }
     fun save(trip: Trip?, tripId: String, expectedHeads: Set<String>): JournalSnapshot {
         trip?.validate()
         val fresh = read()

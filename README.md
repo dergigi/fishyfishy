@@ -25,6 +25,7 @@ Requires JDK 17 and Android SDK 35.
 - Read and hear guide lessons in your selected language using installed offline Android voices.
 - Follow the device’s light or dark theme automatically.
 - Log a swim's date, location, duration, notes and sightings; mark guesses as uncertain.
+- Add a forgotten creature to your last logged swim directly from its detail page.
 - Revisit, edit and delete swims; grow a collection of confirmed discoveries.
 - Play a gentle photo identification game together.
 - Open a documentary or educational short in the selected language from each creature page; broader habitat films are labelled clearly. Portuguese shorts use on-screen Portuguese text. See [film selections](docs/DOCUMENTARIES.md).
