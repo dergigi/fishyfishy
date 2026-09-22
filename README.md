@@ -24,7 +24,7 @@ Requires JDK 17 and Android SDK 35.
 - Switch the whole app between English, Portuguese and German using the flag menu beside Info; scientific names remain alongside the common names.
 - Read and hear guide lessons in your selected language using installed offline Android voices.
 - Follow the device’s light or dark theme automatically.
-- Log a swim's date, location, duration, notes and sightings; mark guesses as uncertain.
+- Log a swim's date, location, duration, notes and sightings; identify creatures using large swipeable photos, zoom and visual clues, then tick sightings or mark guesses as uncertain.
 - Add a forgotten creature to your last logged swim directly from its detail page.
 - Revisit, edit and delete swims; grow a collection of confirmed discoveries.
 - Play a gentle photo identification game together.

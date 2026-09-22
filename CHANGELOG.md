@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Replace tiny swim-picker thumbnails with large, swipeable photos, tap-to-zoom and identification clues. Use a separate checkbox to select sightings while keeping the swim draft open.
+
 ## [0.7.0] - 2026-09-20
 
 ### Added

@@ -13,6 +13,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import kotlinx.coroutines.launch
@@ -371,6 +374,45 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     }
 }
 
+@Composable private fun CreaturePhotoGallery(species: Species, language: String, pager: PagerState) {
+    val strings = LocalStrings.current
+    val context = LocalContext.current
+    val photos = listOf(GuidePhoto(species.image, species.id, species.photoLabel, species.photoDescription)) + species.otherPhotos
+    val photo = photos[pager.currentPage]
+    val galleryScope = rememberCoroutineScope()
+    var showPhoto by rememberSaveable(species.id) { mutableStateOf(false) }
+    if (showPhoto) {
+        val credit = remember(photo.creditId) {
+            val all = JSONArray(context.assets.open("photo-credits.json").bufferedReader().use { it.readText() })
+            (0 until all.length()).map { all.getJSONObject(it) }.first { it.getString("id") == photo.creditId }
+        }
+        PhotoViewer(photo, species.display(language), "${credit.getString("author")} · ${credit.getString("license")}") { showPhoto = false }
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        HorizontalPager(state = pager, key = { photos[it].creditId }, modifier = Modifier.fillMaxWidth()) { index ->
+            val page = photos[index]
+            Image(painterResource(page.image), "${species.display(language)}: ${page.label}",
+                Modifier.fillMaxWidth().heightIn(max = 430.dp).aspectRatio(1.4f).clip(Shell)
+                    .clickable(onClickLabel = strings("Open photo to zoom")) { showPhoto = true },
+                contentScale = ContentScale.Fit)
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(photo.label, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+            if (photos.size > 1) {
+                IconButton(onClick = { galleryScope.launch { pager.animateScrollToPage((pager.currentPage - 1).coerceAtLeast(0)) } }, enabled = pager.currentPage > 0) {
+                    Icon(Icons.Rounded.ChevronLeft, strings("Previous photo"))
+                }
+                Text(strings("%d / %d", pager.currentPage + 1, photos.size), fontSize = 13.sp)
+                IconButton(onClick = { galleryScope.launch { pager.animateScrollToPage((pager.currentPage + 1).coerceAtMost(photos.lastIndex)) } }, enabled = pager.currentPage < photos.lastIndex) {
+                    Icon(Icons.Rounded.ChevronRight, strings("Next photo"))
+                }
+            }
+        }
+        photo.description?.let { Text(it, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp) }
+        Text(if (photos.size > 1) strings("Swipe for more photos · Tap to zoom") else strings("Tap the photo to zoom in"), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+    }
+}
+
 @Composable private fun SpeciesScreen(species: Species, language: String, spotted: Boolean, speak: Speaker, model: JournalModel, add: () -> Unit) {
     val strings = LocalStrings.current
     val context = LocalContext.current
@@ -378,40 +420,14 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
     val lastSwimHeads = lastSwim?.let { model.headIds(it.id) }.orEmpty()
     val photos = listOf(GuidePhoto(species.image, species.id, species.photoLabel, species.photoDescription)) + species.otherPhotos
     val pager = rememberPagerState(pageCount = { photos.size })
-    val galleryScope = rememberCoroutineScope()
     val photo = photos[pager.currentPage]
-    var showPhoto by rememberSaveable(species.id) { mutableStateOf(false) }
     val credits = remember(photo.creditId) {
         val all = JSONArray(context.assets.open("photo-credits.json").bufferedReader().use { it.readText() })
         (0 until all.length()).map { all.getJSONObject(it) }.first { it.getString("id") == photo.creditId }
     }
-    if (showPhoto) PhotoViewer(photo, species.display(language),
-        "${credits.getString("author")} · ${credits.getString("license")}") { showPhoto = false }
     LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
         item {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                HorizontalPager(state = pager, key = { photos[it].creditId }, modifier = Modifier.fillMaxWidth()) { index ->
-                    val page = photos[index]
-                    Image(painterResource(page.image), "${species.display(language)}: ${page.label}",
-                        Modifier.fillMaxWidth().heightIn(max = 430.dp).aspectRatio(1.4f).clip(Shell)
-                            .clickable(onClickLabel = strings("Open photo to zoom")) { showPhoto = true },
-                        contentScale = ContentScale.Fit)
-                }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(photo.label, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
-                    if (photos.size > 1) {
-                        IconButton(onClick = { galleryScope.launch { pager.animateScrollToPage((pager.currentPage - 1).coerceAtLeast(0)) } }, enabled = pager.currentPage > 0) {
-                            Icon(Icons.Rounded.ChevronLeft, strings("Previous photo"))
-                        }
-                        Text(strings("%d / %d", pager.currentPage + 1, photos.size), fontSize = 13.sp)
-                        IconButton(onClick = { galleryScope.launch { pager.animateScrollToPage((pager.currentPage + 1).coerceAtMost(photos.lastIndex)) } }, enabled = pager.currentPage < photos.lastIndex) {
-                            Icon(Icons.Rounded.ChevronRight, strings("Next photo"))
-                        }
-                    }
-                }
-                photo.description?.let { Text(it, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp) }
-                Text(if (photos.size > 1) strings("Swipe for more photos · Tap to zoom") else strings("Tap the photo to zoom in"), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
-            }
+            CreaturePhotoGallery(species, language, pager)
         }
         item {
             Eyebrow(if (spotted) strings("A familiar face · spotted by you") else if (species.comparisonNote != null) strings("A lookalike to compare") else strings("Meet a Madeira neighbour"))
@@ -674,17 +690,25 @@ private fun Species.display(language: String) = when (language) { "pt" -> portug
                             OutlinedTextField(duration, { if (it.length <= 3 && it.all(Char::isDigit)) duration = it }, label = { Text(strings("Minutes")) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true, modifier = Modifier.width(115.dp), shape = RoundedCornerShape(16.dp), enabled = !busy)
                         }
                     }
-                    item { Text(strings("Who did you meet?"), fontSize = 24.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold); Text(strings("Tap a creature to add it. It’s okay to be unsure."), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 5.dp)) }
+                    item { Text(strings("Who did you meet?"), fontSize = 24.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold); Text(strings("Look through the photos, then tick the creatures you saw. It’s okay to be unsure."), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 5.dp)) }
                     item { OutlinedTextField(search, { search = it }, placeholder = { Text(strings("Find a creature…")) }, leadingIcon = { Icon(Icons.Rounded.Search, null) }, singleLine = true, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) }
                     items(guide.filter { strings.matches(it, search) }, key = { it.id }) { s ->
                         val checked = s.id in selected
                         Surface(shape = RoundedCornerShape(18.dp), color = if (checked) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.surfaceContainerLow) {
-                            Column {
-                                Row(Modifier.fillMaxWidth().clickable(enabled = !busy) { if (checked) { selected = selected - s.id; unsure = unsure - s.id } else selected = selected + s.id }.padding(12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                    Image(painterResource(s.image), null, Modifier.size(64.dp).clip(RoundedCornerShape(12.dp)), contentScale = ContentScale.Crop)
-                                    Column(Modifier.weight(1f)) { Text(s.display(language), fontWeight = FontWeight.Bold); Text(s.scientific, fontSize = 11.sp, fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-                                    Checkbox(checked = checked, onCheckedChange = null)
+                            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                val photoPager = rememberPagerState(pageCount = { 1 + s.otherPhotos.size })
+                                CreaturePhotoGallery(s, language, photoPager)
+                                Row(Modifier.fillMaxWidth().toggleable(value = checked, enabled = !busy, role = Role.Checkbox) {
+                                    if (it) selected = selected + s.id else { selected = selected - s.id; unsure = unsure - s.id }
+                                }.padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                    Column(Modifier.weight(1f)) {
+                                        Text(s.display(language), fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                                        Text(s.scientific, fontSize = 12.sp, fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    }
+                                    Checkbox(checked = checked, onCheckedChange = null, enabled = !busy)
                                 }
+                                Text(s.clues, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
+                                s.comparisonNote?.let { Text(it, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp) }
                                 if (checked) Row(Modifier.fillMaxWidth().padding(start = 18.dp, end = 12.dp, bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                                     Text(strings("Not sure yet"), color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 13.sp, modifier = Modifier.weight(1f))
                                     Switch(checked = s.id in unsure, onCheckedChange = { unsure = if (it) unsure + s.id else unsure - s.id }, enabled = !busy)
