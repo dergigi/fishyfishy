@@ -19,8 +19,8 @@ android {
         applicationId = "org.dergigi.fishyfishy"
         minSdk = 26
         targetSdk = 35
-        versionCode = 9
-        versionName = "0.7.0"
+        versionCode = 10
+        versionName = "0.8.0"
     }
     if (canSign) signingConfigs.create("release") {
         storeFile = file(signingValue("OEM_STORE_FILE")!!)

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-09-22
+
 ### Changed
 - Replace tiny swim-picker thumbnails with large, swipeable photos, tap-to-zoom and identification clues. Use a separate checkbox to select sightings while keeping the swim draft open.
 
@@ -79,7 +81,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Personal discovery collection, photo identification game, and journal backup export and restore.
 - Signed Android releases and Zapstore publishing under the existing publisher identity.
 
-[Unreleased]: https://github.com/dergigi/fishyfishy/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/dergigi/fishyfishy/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/dergigi/fishyfishy/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/dergigi/fishyfishy/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/dergigi/fishyfishy/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/dergigi/fishyfishy/compare/v0.4.0...v0.5.0
